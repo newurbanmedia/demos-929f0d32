@@ -8,6 +8,7 @@
 - [Día de los Muertos 2026 — Design Presentation](./ddlm.html)
 - [Ferguson Industrial Co. , Case Study Templates](./ferguson-case-study-templates%20(3).html)
 - [The Last Christmas — Visual Identity , Cazateatro 2026](./lc1.html)
+- [The Last Christmas — Identidad Visual , Cazateatro 2026](./lc2-1.html)
 - [The Last Christmas — Identidad Visual , Cazateatro 2026](./lc2.html)
 - [Latin Fest 901 — Visual Identity 2026](./lf-1.html)
 - [Latin Fest 901 · 2026 — Design Presentation](./lf-2.html)
