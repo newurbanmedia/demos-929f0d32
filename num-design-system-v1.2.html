@@ -1,0 +1,2207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>New Urban Media — Design System v1.2</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..700,0..100;1,9..144,300..700,0..100&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     DESIGN TOKENS
+     ============================================================ */
+  :root {
+    /* ---------- Surface & ink ---------- */
+    --bg-base:       #EEF0F5;
+    --bg-raised:     #F5F7FB;
+    --bg-sunken:     #E6E9EF;
+
+    --ink-900: #0E1220;
+    --ink-700: #2B3142;
+    --ink-500: #5A6275;
+    --ink-300: #8A92A6;
+    --ink-200: #B4BACC;
+
+    /* ---------- Magenta — primary brand + action ---------- */
+    --magenta-100: #FCE4EC;
+    --magenta-300: #F489AF;
+    --magenta-500: #D80052;
+    --magenta-600: #B00043;
+    --magenta-700: #880035;
+
+    /* ---------- Blue — strategic accent (used sparingly) ---------- */
+    --blue-100: #D4E8F5;
+    --blue-300: #6BB6DE;
+    --blue-500: #0B7FBD;
+    --blue-600: #085E8C;
+    --blue-700: #053D5C;
+
+    /* ---------- Semantic roles ---------- */
+    /* Primary action = brand = magenta. Same hue family, different names
+       to preserve semantic intent in component code. */
+    --action:         var(--magenta-500);
+    --action-hover:   var(--magenta-600);
+    --action-pressed: var(--magenta-700);
+    --action-tint:    var(--magenta-100);
+
+    --brand:       var(--magenta-500);
+    --brand-deep:  var(--magenta-600);
+    --brand-tint:  var(--magenta-100);
+
+    --accent:        var(--blue-500);
+    --accent-deep:   var(--blue-600);
+    --accent-tint:   var(--blue-100);
+
+    /* ---------- Status ---------- */
+    --success-500: #16A171;
+    --warning-500: #E5A229;
+    --error-500:   #DC2626;
+
+    /* ---------- Shadows ---------- */
+    --shadow-color-dark:  166, 175, 195;
+    --shadow-color-light: 255, 255, 255;
+
+    --shadow-xs:  3px 3px 6px rgba(var(--shadow-color-dark), 0.35),
+                  -3px -3px 6px rgba(var(--shadow-color-light), 0.85);
+    --shadow-sm:  6px 6px 12px rgba(var(--shadow-color-dark), 0.38),
+                  -6px -6px 12px rgba(var(--shadow-color-light), 0.9);
+    --shadow-md:  10px 10px 20px rgba(var(--shadow-color-dark), 0.4),
+                  -10px -10px 20px rgba(var(--shadow-color-light), 0.95);
+    --shadow-lg:  16px 16px 32px rgba(var(--shadow-color-dark), 0.4),
+                  -16px -16px 32px rgba(var(--shadow-color-light), 0.95);
+
+    --shadow-inset-xs: inset 2px 2px 4px rgba(var(--shadow-color-dark), 0.4),
+                       inset -2px -2px 4px rgba(var(--shadow-color-light), 0.9);
+    --shadow-inset-sm: inset 4px 4px 8px rgba(var(--shadow-color-dark), 0.4),
+                       inset -4px -4px 8px rgba(var(--shadow-color-light), 0.9);
+    --shadow-inset-md: inset 6px 6px 12px rgba(var(--shadow-color-dark), 0.45),
+                       inset -6px -6px 12px rgba(var(--shadow-color-light), 0.9);
+
+    --shadow-pressed: inset 4px 4px 8px rgba(var(--shadow-color-dark), 0.5),
+                      inset -4px -4px 8px rgba(var(--shadow-color-light), 0.95);
+
+    --focus-ring: 0 0 0 3px rgba(216, 0, 82, 0.35);
+
+    /* ---------- Typography ---------- */
+    /* Poppins handles the interface. Fraunces appears only in pull
+       quotes. JetBrains Mono is used for technical captions, indices,
+       tokens, and metadata. */
+    --font-body: 'Poppins', system-ui, sans-serif;
+    --font-editorial: 'Fraunces', Georgia, serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-md: 1.125rem;
+    --text-lg: 1.375rem;
+    --text-xl: 1.75rem;
+    --text-2xl: 2.25rem;
+    --text-3xl: 3rem;
+
+    /* ---------- Spacing ---------- */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 2.5rem;
+    --space-8: 3rem;
+    --space-10: 4rem;
+    --space-12: 6rem;
+
+    /* ---------- Radius ---------- */
+    --radius-sm: 8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
+    --radius-pill: 999px;
+
+    /* ---------- Motion ---------- */
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --t-fast: 150ms;
+    --t-med:  250ms;
+    --t-slow: 400ms;
+  }
+
+  /* ============================================================
+     RESET + BASE
+     ============================================================ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg-base);
+    color: var(--ink-900);
+    font-size: var(--text-base);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--ink-900);
+  }
+  h1 { font-size: var(--text-2xl); font-weight: 800; letter-spacing: -0.025em; }
+  h2 { font-size: var(--text-xl); font-weight: 700; }
+  h3 { font-size: var(--text-lg); font-weight: 600; }
+  h4 { font-size: var(--text-md); font-weight: 600; }
+
+  .editorial {
+    font-family: var(--font-editorial);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    font-variation-settings: "opsz" 120, "SOFT" 30;
+  }
+
+  p { color: var(--ink-500); }
+
+  code, .mono { font-family: var(--font-mono); font-size: 0.85em; }
+
+  /* Text links — darker magenta for reading contrast on light bg */
+  a {
+    color: var(--magenta-700);
+    text-decoration: none;
+    transition: color var(--t-fast);
+    font-weight: 500;
+  }
+  a:hover { color: var(--magenta-600); }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: var(--radius-sm);
+  }
+
+  /* ============================================================
+     LAYOUT
+     ============================================================ */
+  .page { max-width: 1280px; margin: 0 auto; padding: var(--space-8) var(--space-6) var(--space-12); }
+
+  .page-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    margin-bottom: var(--space-10);
+    padding-bottom: var(--space-6);
+    border-bottom: 1px solid var(--ink-200);
+  }
+
+  /* Page title — sized down from v0.5. 32-44px range. */
+  .page-header h1 {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(2rem, 3.5vw, 2.75rem);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+  }
+
+  .page-header .kicker {
+    display: block;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: var(--text-xs);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brand);
+    margin-bottom: var(--space-3);
+  }
+
+  .page-header p {
+    max-width: 58ch;
+    margin-top: var(--space-3);
+    font-size: var(--text-base);
+    line-height: 1.6;
+  }
+
+  .meta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-300);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .meta strong { color: var(--ink-700); font-weight: 500; }
+
+  section.group { margin-bottom: var(--space-12); }
+
+  .group-heading {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+  .group-heading h2 {
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: var(--text-xl);
+    letter-spacing: -0.015em;
+  }
+  .group-heading .index {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    color: var(--brand);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .subgroup { margin-bottom: var(--space-8); }
+
+  .subgroup-title {
+    font-family: var(--font-body);
+    font-size: var(--text-md);
+    font-weight: 600;
+    color: var(--ink-700);
+    margin-bottom: var(--space-4);
+    padding-left: var(--space-3);
+    border-left: 3px solid var(--brand);
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+  .subgroup-title .code {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    color: var(--ink-300);
+    text-transform: uppercase;
+  }
+
+  .caption {
+    font-size: var(--text-sm);
+    color: var(--ink-500);
+    margin-bottom: var(--space-5);
+    max-width: 62ch;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-500);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: var(--space-4);
+    display: block;
+    font-weight: 500;
+  }
+
+  .anatomy {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+    padding: 4px 10px;
+    background: var(--bg-base);
+    box-shadow: var(--shadow-inset-xs);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--ink-500);
+    line-height: 1;
+  }
+  .anatomy strong { font-weight: 500; color: var(--ink-700); }
+  .anatomy .divider { color: var(--ink-200); }
+
+  .grid { display: grid; gap: var(--space-5); }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  .grid-5 { grid-template-columns: repeat(5, 1fr); }
+
+  @media (max-width: 900px) {
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    .grid-4, .grid-5 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    .grid-2, .grid-3, .grid-4, .grid-5 { grid-template-columns: 1fr; }
+  }
+
+  /* ============================================================
+     TOKEN DISPLAY
+     ============================================================ */
+  .swatch {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    background: var(--bg-raised);
+    box-shadow: var(--shadow-sm);
+  }
+  .swatch-color { height: 84px; position: relative; }
+  .swatch-role {
+    position: absolute;
+    top: var(--space-2);
+    right: var(--space-2);
+    padding: 2px 8px;
+    border-radius: var(--radius-pill);
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(4px);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-700);
+    font-weight: 500;
+  }
+  .swatch-info { padding: var(--space-3) var(--space-4); display: flex; flex-direction: column; gap: 2px; }
+  .swatch-name {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    color: var(--ink-900);
+  }
+  .swatch-hex {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-500);
+  }
+
+  .type-sample {
+    padding: var(--space-5) var(--space-6);
+    border-radius: var(--radius-md);
+    background: var(--bg-base);
+    box-shadow: var(--shadow-inset-sm);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-5);
+    flex-wrap: wrap;
+  }
+  .type-sample .spec {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-300);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+  }
+
+  .shadow-sample {
+    aspect-ratio: 1 / 1;
+    border-radius: var(--radius-md);
+    background: var(--bg-base);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: var(--space-3);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-500);
+    letter-spacing: 0.03em;
+  }
+  .shadow-xs  { box-shadow: var(--shadow-xs); }
+  .shadow-sm  { box-shadow: var(--shadow-sm); }
+  .shadow-md  { box-shadow: var(--shadow-md); }
+  .shadow-lg  { box-shadow: var(--shadow-lg); }
+  .shadow-in-xs { box-shadow: var(--shadow-inset-xs); }
+  .shadow-in-sm { box-shadow: var(--shadow-inset-sm); }
+  .shadow-in-md { box-shadow: var(--shadow-inset-md); }
+
+  .space-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    background: var(--bg-base);
+    box-shadow: var(--shadow-inset-xs);
+  }
+  /* Space bar uses ink (neutral/technical), not brand color, since
+     this is meta documentation, not brand expression. */
+  .space-bar {
+    height: 16px;
+    border-radius: var(--radius-pill);
+    background: var(--ink-700);
+    box-shadow: var(--shadow-xs);
+  }
+  .space-label {
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--ink-700);
+    min-width: 88px;
+    font-weight: 500;
+  }
+  .space-px { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--ink-300); }
+
+  .radius-sample {
+    aspect-ratio: 3 / 2;
+    background: var(--bg-base);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-500);
+  }
+  .r-sm { border-radius: var(--radius-sm); }
+  .r-md { border-radius: var(--radius-md); }
+  .r-lg { border-radius: var(--radius-lg); }
+  .r-xl { border-radius: var(--radius-xl); }
+
+  /* ============================================================
+     TYPOGRAPHY USAGE CALLOUT
+     ============================================================ */
+  .type-rules {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+  @media (max-width: 800px) { .type-rules { grid-template-columns: 1fr; } }
+
+  .type-rule {
+    padding: var(--space-5);
+    border-radius: var(--radius-md);
+    background: var(--bg-base);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+  }
+  .type-rule .tag {
+    display: inline-block;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-300);
+    margin-bottom: var(--space-3);
+    font-weight: 500;
+  }
+  .type-rule .name {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+    color: var(--ink-900);
+  }
+  .type-rule .usage {
+    font-size: var(--text-xs);
+    font-family: var(--font-mono);
+    color: var(--ink-500);
+    line-height: 1.6;
+  }
+  .type-rule .name.f-editorial { font-family: var(--font-editorial); font-weight: 500; font-size: var(--text-xl); }
+  .type-rule .name.f-mono { font-family: var(--font-mono); font-weight: 500; font-size: var(--text-md); }
+
+  /* ============================================================
+     BUTTONS
+     ============================================================ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    border: 0;
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    letter-spacing: 0.005em;
+    cursor: pointer;
+    transition: all var(--t-fast) var(--ease);
+    text-decoration: none;
+    line-height: 1;
+  }
+
+  /* Primary — magenta. The brand on the button. */
+  .btn-primary {
+    background: var(--action);
+    color: #fff;
+    box-shadow: var(--shadow-sm),
+                inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+  .btn-primary:hover {
+    background: var(--action-hover);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md),
+                inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+    background: var(--action-pressed);
+    box-shadow: var(--shadow-xs),
+                inset 2px 2px 4px rgba(0,0,0,0.2);
+  }
+
+  /* Secondary — neumorphic, used alongside primary */
+  .btn-secondary {
+    background: var(--bg-base);
+    color: var(--ink-900);
+    box-shadow: var(--shadow-sm);
+  }
+  .btn-secondary:hover {
+    color: var(--action);
+    box-shadow: var(--shadow-md);
+  }
+  .btn-secondary:active {
+    box-shadow: var(--shadow-pressed);
+    color: var(--action-pressed);
+  }
+
+  /* Ghost — for tertiary inline actions */
+  .btn-ghost {
+    background: transparent;
+    color: var(--ink-700);
+    box-shadow: none;
+    padding: var(--space-3) var(--space-4);
+  }
+  .btn-ghost:hover {
+    background: var(--bg-base);
+    color: var(--action);
+    box-shadow: var(--shadow-inset-xs);
+  }
+
+  /* Accent — blue. Used sparingly for strategic emphasis. */
+  .btn-accent {
+    background: var(--accent);
+    color: #fff;
+    box-shadow: var(--shadow-sm),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+  .btn-accent:hover {
+    background: var(--accent-deep);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+  }
+
+  .btn-icon {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: var(--radius-md);
+  }
+  .btn svg { width: 16px; height: 16px; }
+
+  .btn-mono {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: var(--space-3) var(--space-5);
+  }
+
+  /* Text button — flat, no background, no shadow. Reads as a link
+     with a trailing arrow. Use when a card or section needs a CTA
+     that doesn't compete with primary or secondary buttons nearby. */
+  .btn-text {
+    background: transparent;
+    color: var(--ink-700);
+    box-shadow: none;
+    padding: var(--space-2) 0;
+  }
+  .btn-text:hover {
+    background: transparent;
+    color: var(--action);
+    box-shadow: none;
+    transform: none;
+  }
+  .btn-text svg { transition: transform var(--t-fast) var(--ease); }
+  .btn-text:hover svg { transform: translateX(4px); }
+
+  /* ============================================================
+     CARD
+     ============================================================ */
+  /* Flex column so the toggle can pin to the bottom. Reduced bottom
+     padding for a tighter read. */
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-6) var(--space-6) var(--space-5);
+    background: var(--bg-base);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: box-shadow var(--t-med) var(--ease),
+                transform var(--t-med) var(--ease);
+  }
+  .card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+  }
+
+  .card-marker {
+    position: absolute;
+    top: var(--space-5);
+    right: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-300);
+    font-weight: 500;
+  }
+
+  /* Icon — magenta tile. Glow only on card hover, not at rest. */
+  .card-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(135deg, var(--magenta-500), var(--magenta-600));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.25);
+    margin-bottom: var(--space-5);
+    color: #fff;
+    transition: box-shadow var(--t-med) var(--ease);
+  }
+  .card:hover .card-icon {
+    box-shadow: 0 6px 18px rgba(216, 0, 82, 0.2),
+                inset 0 1px 0 rgba(255,255,255,0.25);
+  }
+  .card-icon svg { width: 20px; height: 20px; }
+
+  /* Title — natural height. Paragraph flows directly beneath, per row.
+     No min-height lock. Icons align at top, titles start at the same Y,
+     paragraphs flow, toggles bottom-align via margin-top: auto. */
+  .card h3 {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-3);
+    color: var(--ink-900);
+    letter-spacing: -0.01em;
+  }
+  .card p { font-size: var(--text-sm); color: var(--ink-500); line-height: 1.65; }
+
+  .card-expandable { overflow: hidden; }
+  .card-expandable .card-preview {
+    position: relative;
+    max-height: 96px;
+    overflow: hidden;
+    margin-bottom: var(--space-4);
+    transition: max-height var(--t-slow) var(--ease);
+  }
+  .card-expandable .card-preview::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 40px;
+    background: linear-gradient(to bottom, transparent, var(--bg-base) 90%);
+    pointer-events: none;
+    transition: opacity var(--t-med) var(--ease);
+  }
+  .card-expandable.is-open .card-preview { max-height: 600px; }
+  .card-expandable.is-open .card-preview::after { opacity: 0; }
+
+  /* Toggle — ink at rest, magenta on engagement */
+  .card-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    align-self: flex-start;
+    margin-top: auto;
+    background: transparent;
+    border: 0;
+    padding: var(--space-2) 0 0;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--ink-700);
+    cursor: pointer;
+    transition: color var(--t-fast);
+  }
+  .card-toggle:hover { color: var(--action); }
+  .card-toggle svg {
+    width: 14px; height: 14px;
+    transition: transform var(--t-med) var(--ease);
+  }
+  .card-expandable.is-open .card-toggle svg { transform: rotate(180deg); }
+
+  /* ============================================================
+     ACCORDION
+     ============================================================ */
+  .accordion { display: flex; flex-direction: column; gap: var(--space-3); }
+
+  .accordion-item {
+    background: var(--bg-base);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: box-shadow var(--t-med);
+  }
+  .accordion-item.is-open { box-shadow: var(--shadow-md); }
+
+  .accordion-trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: transparent;
+    border: 0;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: var(--text-md);
+    color: var(--ink-900);
+    text-align: left;
+    cursor: pointer;
+    transition: color var(--t-fast);
+    letter-spacing: -0.01em;
+  }
+  .accordion-trigger:hover { color: var(--action); }
+
+  .accordion-number {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-300);
+    letter-spacing: 0.08em;
+    margin-right: var(--space-3);
+    font-weight: 500;
+  }
+
+  /* Icon pill — turns magenta when open. Tracy liked this. Kept. */
+  .accordion-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-base);
+    box-shadow: var(--shadow-inset-xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all var(--t-med);
+  }
+  .accordion-item.is-open .accordion-icon {
+    background: var(--action);
+    box-shadow: var(--shadow-sm);
+    color: #fff;
+  }
+  .accordion-icon svg {
+    width: 14px; height: 14px;
+    transition: transform var(--t-med) var(--ease);
+  }
+  .accordion-item.is-open .accordion-icon svg { transform: rotate(45deg); }
+
+  .accordion-panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height var(--t-slow) var(--ease);
+  }
+  .accordion-item.is-open .accordion-panel { max-height: 500px; }
+
+  .accordion-content {
+    padding: 0 var(--space-5) var(--space-5);
+    color: var(--ink-500);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+  }
+
+  /* ============================================================
+     CARD-CTA — service cards with a button instead of toggle.
+     Reuses the flex-column card structure; button pins to bottom
+     via margin-top: auto, same pattern as the expandable toggle.
+     Paragraph margin-bottom guarantees a minimum gap above the CTA
+     even when content is long enough that margin-top: auto can't
+     add extra space.
+     ============================================================ */
+  .card-cta p {
+    margin-bottom: var(--space-6);
+  }
+  .card-cta .btn {
+    align-self: flex-start;
+    margin-top: auto;
+  }
+
+  /* ============================================================
+     TABS — horizontal and vertical
+     ============================================================ */
+
+  /* Shared panel behavior */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* --- Horizontal tabs --- */
+  /* Content-scoped tabs. Distinct from the page-level nav-pill at top.
+     Magenta underline on the active tab; flat text otherwise. */
+  .tabs-horizontal-nav {
+    display: flex;
+    gap: var(--space-5);
+    border-bottom: 1px solid var(--ink-200);
+    margin-bottom: var(--space-5);
+    overflow-x: auto;
+  }
+
+  .tab-horizontal {
+    background: transparent;
+    border: 0;
+    padding: var(--space-3) 0;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    color: var(--ink-500);
+    cursor: pointer;
+    position: relative;
+    transition: color var(--t-fast);
+    white-space: nowrap;
+  }
+  .tab-horizontal:hover { color: var(--ink-900); }
+  .tab-horizontal.active {
+    color: var(--action);
+    font-weight: 600;
+  }
+  .tab-horizontal.active::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -1px;
+    height: 2px;
+    background: var(--action);
+    border-radius: var(--radius-pill) var(--radius-pill) 0 0;
+  }
+
+  .tabs-horizontal-body { padding: var(--space-3) 0; }
+  .tabs-horizontal-body h4 {
+    font-size: var(--text-md);
+    margin-bottom: var(--space-3);
+  }
+  .tabs-horizontal-body p {
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    max-width: 68ch;
+  }
+
+  /* --- Vertical tabs --- */
+  /* Navigation rail sits in an inset well; active tab raises out of
+     it with neumorphic shadow, mirroring the nav-pill active state. */
+  .tabs-vertical {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: var(--space-6);
+  }
+  @media (max-width: 700px) {
+    .tabs-vertical { grid-template-columns: 1fr; }
+  }
+
+  .tabs-vertical-nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    padding: var(--space-3);
+    background: var(--bg-base);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-inset-sm);
+    align-self: start;
+  }
+
+  .tab-vertical {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: transparent;
+    border: 0;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: var(--text-sm);
+    color: var(--ink-500);
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--t-fast);
+    width: 100%;
+  }
+  .tab-vertical:hover { color: var(--ink-900); }
+  .tab-vertical.active {
+    background: var(--bg-base);
+    color: var(--action);
+    box-shadow: var(--shadow-sm);
+    font-weight: 600;
+  }
+
+  .tab-vertical-num {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-300);
+    letter-spacing: 0.05em;
+    min-width: 20px;
+    font-weight: 500;
+  }
+  .tab-vertical.active .tab-vertical-num { color: var(--action); }
+
+  .tabs-vertical-body { padding: var(--space-3) 0; }
+  .tabs-vertical-body h4 {
+    font-size: var(--text-md);
+    margin-bottom: var(--space-3);
+  }
+  .tabs-vertical-body p {
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    max-width: 62ch;
+  }
+
+  /* ============================================================
+     FORMS
+     ============================================================ */
+  .field { display: flex; flex-direction: column; gap: var(--space-2); }
+  .field label {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ink-700);
+    padding-left: var(--space-2);
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+  }
+  .field label .field-meta {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--ink-300);
+    letter-spacing: 0.04em;
+  }
+
+  .input, .textarea, .select {
+    width: 100%;
+    padding: var(--space-3) var(--space-4);
+    background: var(--bg-base);
+    border: 0;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-inset-sm);
+    font-family: var(--font-body);
+    font-size: var(--text-base);
+    color: var(--ink-900);
+    transition: box-shadow var(--t-fast);
+  }
+  .input::placeholder, .textarea::placeholder { color: var(--ink-300); }
+  .input:focus, .textarea:focus, .select:focus {
+    outline: none;
+    box-shadow: var(--shadow-inset-md), var(--focus-ring);
+  }
+  .textarea { min-height: 100px; resize: vertical; font-family: var(--font-body); }
+  .select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%235A6275' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-4) center;
+    padding-right: var(--space-7);
+  }
+
+  .field.is-error .input,
+  .field.is-error .textarea,
+  .field.is-error .select {
+    box-shadow: var(--shadow-inset-sm),
+                inset 0 0 0 2px var(--error-500);
+  }
+  .field-error {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding-left: var(--space-2);
+    font-size: var(--text-xs);
+    color: var(--error-500);
+    font-weight: 500;
+  }
+  .field-error svg { width: 12px; height: 12px; }
+
+  .checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    cursor: pointer;
+    position: relative;
+  }
+  .checkbox-row input { position: absolute; opacity: 0; pointer-events: none; }
+  .checkbox-box {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    background: var(--bg-base);
+    box-shadow: var(--shadow-inset-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--t-fast);
+  }
+  .checkbox-box svg {
+    width: 14px; height: 14px;
+    color: #fff;
+    opacity: 0;
+    transform: scale(0.6);
+    transition: all var(--t-fast);
+  }
+  .checkbox-row input:checked ~ .checkbox-box {
+    background: var(--action);
+    box-shadow: var(--shadow-sm);
+  }
+  .checkbox-row input:checked ~ .checkbox-box svg {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .checkbox-row span { font-size: var(--text-sm); color: var(--ink-700); }
+
+  .toggle {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    border-radius: var(--radius-pill);
+    background: var(--bg-base);
+    box-shadow: var(--shadow-inset-sm);
+    cursor: pointer;
+    transition: box-shadow var(--t-med);
+  }
+  .toggle-knob {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--bg-raised);
+    box-shadow: var(--shadow-xs);
+    transition: transform var(--t-med) var(--ease), background var(--t-med);
+  }
+  .toggle.is-on .toggle-knob {
+    transform: translateX(24px);
+    background: var(--action);
+  }
+
+  /* ============================================================
+     BADGES
+     ============================================================ */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+  .badge-brand     { background: var(--brand-tint); color: var(--brand-deep); }
+  .badge-info      { background: var(--accent-tint); color: var(--accent-deep); }
+  .badge-neutral   { background: var(--bg-base); color: var(--ink-700); box-shadow: var(--shadow-inset-xs); }
+  .badge-success   { background: rgba(22, 161, 113, 0.12); color: var(--success-500); }
+  .badge-warning   { background: rgba(229, 162, 41, 0.12); color: #A66E0B; }
+  .badge-error     { background: rgba(220, 38, 38, 0.12); color: var(--error-500); }
+
+  .badge-mono {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 11px;
+  }
+
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+  /* ============================================================
+     PULL QUOTE — the only Fraunces moment
+     ============================================================ */
+  .pullquote {
+    padding: var(--space-8);
+    background: var(--bg-base);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  .pullquote::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 4px; height: 100%;
+    background: linear-gradient(to bottom, var(--brand), transparent 70%);
+  }
+  .pullquote .mark {
+    font-family: var(--font-editorial);
+    font-size: 4.5rem;
+    line-height: 0.7;
+    color: var(--brand);
+    opacity: 0.4;
+    font-variation-settings: "opsz" 144, "SOFT" 100;
+    display: block;
+    margin-bottom: var(--space-3);
+  }
+  .pullquote blockquote {
+    font-family: var(--font-editorial);
+    font-weight: 400;
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    line-height: 1.4;
+    color: var(--ink-900);
+    letter-spacing: -0.01em;
+    font-variation-settings: "opsz" 120, "SOFT" 50;
+    margin-bottom: var(--space-5);
+  }
+  .pullquote-attr {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--ink-200);
+  }
+  /* Avatar placeholder — uses blue as strategic decorative accent */
+  .pullquote-avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue-300), var(--blue-600));
+    box-shadow: var(--shadow-xs);
+    flex-shrink: 0;
+  }
+  .pullquote-name {
+    font-weight: 600;
+    font-size: var(--text-sm);
+    color: var(--ink-900);
+  }
+  .pullquote-title {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-500);
+    letter-spacing: 0.02em;
+  }
+
+  /* ============================================================
+     HERO
+     ============================================================ */
+  .hero {
+    padding: var(--space-8) var(--space-8);
+    border-radius: var(--radius-xl);
+    background: var(--bg-base);
+    box-shadow: var(--shadow-md);
+    position: relative;
+    overflow: hidden;
+  }
+  /* Atmospheric blurs: magenta top-right (brand), blue bottom-left
+     (strategic accent, gives the hero visual dimension without
+     painting a second solid element). */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--brand-tint), transparent 70%);
+    filter: blur(20px);
+    opacity: 0.85;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -120px; left: -120px;
+    width: 320px; height: 320px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--accent-tint), transparent 70%);
+    filter: blur(30px);
+    opacity: 0.6;
+  }
+  .hero > * { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-5);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--brand);
+    font-weight: 500;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 28px;
+    height: 2px;
+    background: var(--brand);
+    border-radius: var(--radius-pill);
+  }
+
+  /* Hero H1 — sized down. 30-40px range. */
+  .hero h1 {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(1.875rem, 3.2vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+    margin-bottom: var(--space-5);
+    max-width: 24ch;
+  }
+  .hero p {
+    font-size: var(--text-base);
+    max-width: 56ch;
+    margin-bottom: var(--space-6);
+    line-height: 1.6;
+  }
+  .hero-actions { display: flex; gap: var(--space-3); flex-wrap: wrap; }
+
+  /* ============================================================
+     STATS BAND
+     ============================================================ */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background: var(--bg-base);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-inset-sm);
+  }
+  @media (max-width: 700px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+
+  .stat { text-align: left; padding: var(--space-3); }
+  /* Stats — sized down. 28-36px range. */
+  .stat-num {
+    font-family: var(--font-body);
+    font-weight: 800;
+    font-size: clamp(1.75rem, 2.5vw, 2.25rem);
+    color: var(--brand);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-bottom: var(--space-2);
+  }
+  .stat-suffix {
+    font-size: 0.5em;
+    font-weight: 600;
+    color: var(--brand);
+    opacity: 0.7;
+    margin-left: 2px;
+  }
+  .stat-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-500);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+
+  /* ============================================================
+     USAGE
+     ============================================================ */
+  .usage-card {
+    padding: var(--space-5) var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--bg-base);
+    box-shadow: var(--shadow-sm);
+  }
+  .usage-card h4 {
+    font-size: var(--text-md);
+    margin-bottom: var(--space-2);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .usage-card .mark-ico { font-family: var(--font-mono); font-size: 1rem; }
+  .usage-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+  .usage-card li {
+    padding-left: var(--space-5);
+    position: relative;
+    font-size: var(--text-sm);
+    color: var(--ink-500);
+    line-height: 1.6;
+  }
+  .usage-card li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 9px;
+    width: 12px; height: 2px;
+    background: var(--action);
+    border-radius: var(--radius-pill);
+  }
+  .usage-do h4 .mark-ico { color: var(--success-500); }
+  .usage-dont h4 .mark-ico { color: var(--error-500); }
+  .usage-dont li::before { background: var(--ink-300); }
+
+  .role-table {
+    background: var(--bg-base);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .role-table th, .role-table td {
+    padding: var(--space-4) var(--space-5);
+    text-align: left;
+    font-size: var(--text-sm);
+    border-bottom: 1px solid var(--ink-200);
+  }
+  .role-table th {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--ink-700);
+    background: var(--bg-sunken);
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .role-table tr:last-child td { border-bottom: 0; }
+  .role-table td:first-child { font-weight: 600; color: var(--ink-900); }
+  .role-table .chip {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    margin-right: var(--space-2);
+    vertical-align: -2px;
+    box-shadow: var(--shadow-xs);
+  }
+  .role-table code {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    background: var(--bg-sunken);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: var(--ink-700);
+  }
+
+  .callout {
+    padding: var(--space-5) var(--space-6);
+    border-radius: var(--radius-lg);
+    background: var(--bg-base);
+    box-shadow: var(--shadow-inset-sm);
+    border-left: 3px solid var(--accent);
+    display: flex;
+    gap: var(--space-4);
+  }
+  .callout-icon {
+    flex-shrink: 0;
+    width: 40px; height: 40px;
+    border-radius: var(--radius-md);
+    background: var(--accent-tint);
+    color: var(--accent-deep);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .callout h4 { font-size: var(--text-md); margin-bottom: var(--space-2); }
+  .callout p { font-size: var(--text-sm); line-height: 1.65; }
+
+  /* ============================================================
+     NAV PILL
+     ============================================================ */
+  .nav-pill {
+    display: inline-flex;
+    padding: var(--space-2);
+    background: var(--bg-base);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-inset-sm);
+    gap: var(--space-1);
+    flex-wrap: wrap;
+  }
+  .nav-pill a {
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--ink-500);
+    transition: all var(--t-fast);
+  }
+  .nav-pill a:hover { color: var(--ink-900); }
+  .nav-pill a.active {
+    background: var(--bg-base);
+    color: var(--action);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ============================================================
+     PAGE FOOTER
+     ============================================================ */
+  .page-footer {
+    margin-top: var(--space-10);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--ink-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-300);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .page-footer strong { color: var(--ink-500); font-weight: 500; }
+
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- ===== HEADER ===== -->
+  <header class="page-header">
+    <div>
+      <span class="kicker">New Urban Media · DS-001</span>
+      <h1>Design System<br/><span style="color: var(--brand);">for the studio.</span></h1>
+      <p>A restrained neumorphic foundation for NUM's public website. Magenta as the primary voice, blue for strategic emphasis, Poppins everywhere, Fraunces for a single editorial moment.</p>
+    </div>
+    <div class="meta">
+      <span><strong>v1.2</strong> · Extended</span>
+      <span>Apr 2026</span>
+    </div>
+  </header>
+
+  <!-- Section nav -->
+  <nav style="margin-bottom: var(--space-10);" aria-label="Sections">
+    <div class="nav-pill">
+      <a href="#foundations" class="active">Foundations</a>
+      <a href="#components">Components</a>
+      <a href="#patterns">Patterns</a>
+      <a href="#usage">Usage</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       FOUNDATIONS
+       ============================================================ -->
+  <section class="group" id="foundations">
+    <div class="group-heading">
+      <span class="index">01</span>
+      <h2>Foundations</h2>
+    </div>
+
+    <!-- Color -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">1.1</span>Color</div>
+      <p class="caption">Magenta is the primary voice: brand identity, primary CTAs, links, focus rings, active states. Blue is a strategic accent used sparingly, at most once per visible section, for info-state callouts and moments that need a second note of emphasis. They sit far enough apart on the color wheel to read as intentional rather than competing.</p>
+
+      <span class="eyebrow">Surface & ink</span>
+      <div class="grid grid-4" style="margin-bottom: var(--space-6);">
+        <div class="swatch"><div class="swatch-color" style="background: #EEF0F5;"></div><div class="swatch-info"><span class="swatch-name">bg-base</span><span class="swatch-hex">#EEF0F5</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #F5F7FB;"></div><div class="swatch-info"><span class="swatch-name">bg-raised</span><span class="swatch-hex">#F5F7FB</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #E6E9EF;"></div><div class="swatch-info"><span class="swatch-name">bg-sunken</span><span class="swatch-hex">#E6E9EF</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #0E1220;"></div><div class="swatch-info"><span class="swatch-name">ink-900</span><span class="swatch-hex">#0E1220</span></div></div>
+      </div>
+
+      <div class="grid grid-4" style="margin-bottom: var(--space-6);">
+        <div class="swatch"><div class="swatch-color" style="background: #2B3142;"></div><div class="swatch-info"><span class="swatch-name">ink-700</span><span class="swatch-hex">#2B3142</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #5A6275;"></div><div class="swatch-info"><span class="swatch-name">ink-500</span><span class="swatch-hex">#5A6275</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #8A92A6;"></div><div class="swatch-info"><span class="swatch-name">ink-300</span><span class="swatch-hex">#8A92A6</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #B4BACC;"></div><div class="swatch-info"><span class="swatch-name">ink-200</span><span class="swatch-hex">#B4BACC</span></div></div>
+      </div>
+
+      <span class="eyebrow">Magenta · primary voice</span>
+      <div class="grid grid-5" style="margin-bottom: var(--space-6);">
+        <div class="swatch"><div class="swatch-color" style="background: #FCE4EC;"></div><div class="swatch-info"><span class="swatch-name">magenta-100</span><span class="swatch-hex">#FCE4EC</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #F489AF;"></div><div class="swatch-info"><span class="swatch-name">magenta-300</span><span class="swatch-hex">#F489AF</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #D80052;"><span class="swatch-role">Brand · Action</span></div><div class="swatch-info"><span class="swatch-name">magenta-500</span><span class="swatch-hex">#D80052</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #B00043;"><span class="swatch-role">Hover</span></div><div class="swatch-info"><span class="swatch-name">magenta-600</span><span class="swatch-hex">#B00043</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #880035;"><span class="swatch-role">Link</span></div><div class="swatch-info"><span class="swatch-name">magenta-700</span><span class="swatch-hex">#880035</span></div></div>
+      </div>
+
+      <span class="eyebrow">Blue · strategic accent</span>
+      <div class="grid grid-5" style="margin-bottom: var(--space-6);">
+        <div class="swatch"><div class="swatch-color" style="background: #D4E8F5;"></div><div class="swatch-info"><span class="swatch-name">blue-100</span><span class="swatch-hex">#D4E8F5</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #6BB6DE;"></div><div class="swatch-info"><span class="swatch-name">blue-300</span><span class="swatch-hex">#6BB6DE</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #0B7FBD;"><span class="swatch-role">Accent</span></div><div class="swatch-info"><span class="swatch-name">blue-500</span><span class="swatch-hex">#0B7FBD</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #085E8C;"></div><div class="swatch-info"><span class="swatch-name">blue-600</span><span class="swatch-hex">#085E8C</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #053D5C;"></div><div class="swatch-info"><span class="swatch-name">blue-700</span><span class="swatch-hex">#053D5C</span></div></div>
+      </div>
+
+      <span class="eyebrow">Status</span>
+      <div class="grid grid-4">
+        <div class="swatch"><div class="swatch-color" style="background: #16A171;"></div><div class="swatch-info"><span class="swatch-name">success-500</span><span class="swatch-hex">#16A171</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #E5A229;"></div><div class="swatch-info"><span class="swatch-name">warning-500</span><span class="swatch-hex">#E5A229</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #DC2626;"></div><div class="swatch-info"><span class="swatch-name">error-500</span><span class="swatch-hex">#DC2626</span></div></div>
+        <div class="swatch"><div class="swatch-color" style="background: #0B7FBD;"></div><div class="swatch-info"><span class="swatch-name">info · blue-500</span><span class="swatch-hex">#0B7FBD</span></div></div>
+      </div>
+    </div>
+
+    <!-- Typography -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">1.2</span>Typography</div>
+      <p class="caption">Three faces, three roles. Poppins does the work. Fraunces is used sparingly, only in pull quotes. JetBrains Mono handles technical metadata: tokens, captions, timestamps, version strings, labels. Heading sizes are deliberately restrained.</p>
+
+      <div class="type-rules">
+        <div class="type-rule">
+          <span class="tag">Primary · workhorse</span>
+          <div class="name">Poppins</div>
+          <div class="usage">All headings, body copy, buttons, forms, nav, UI chrome, microcopy, stat numbers. 95% of the interface.</div>
+        </div>
+        <div class="type-rule">
+          <span class="tag">Editorial · rare</span>
+          <div class="name f-editorial">Fraunces</div>
+          <div class="usage">Pull quote body only. One component across the entire system, used for testimonial copy and editorial openings.</div>
+        </div>
+        <div class="type-rule">
+          <span class="tag">Technical · metadata</span>
+          <div class="name f-mono">JetBrains Mono</div>
+          <div class="usage">Tokens, indices, specs, form meta, category tags, stat labels, badges, timestamps, footer strings, inline code.</div>
+        </div>
+      </div>
+
+      <span class="eyebrow">Poppins · workhorse</span>
+      <div style="display: flex; flex-direction: column; gap: var(--space-4); margin-bottom: var(--space-6);">
+        <div class="type-sample">
+          <span style="font-family: var(--font-body); font-size: 2.75rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1.05;">Heading 1</span>
+          <span class="spec">Poppins · 800 · 44/46 · tracking -0.03em</span>
+        </div>
+        <div class="type-sample">
+          <span style="font-family: var(--font-body); font-size: 2.5rem; font-weight: 800; letter-spacing: -0.025em; line-height: 1.1;">Hero Heading</span>
+          <span class="spec">Poppins · 800 · 40/44 · tracking -0.025em</span>
+        </div>
+        <div class="type-sample">
+          <span style="font-family: var(--font-body); font-size: var(--text-xl); font-weight: 700; letter-spacing: -0.015em;">Heading 2</span>
+          <span class="spec">Poppins · 700 · 28/34</span>
+        </div>
+        <div class="type-sample">
+          <span style="font-family: var(--font-body); font-size: var(--text-lg); font-weight: 600;">Heading 3</span>
+          <span class="spec">Poppins · 600 · 22/28</span>
+        </div>
+        <div class="type-sample">
+          <span style="font-family: var(--font-body); font-size: var(--text-md); font-weight: 600;">Heading 4</span>
+          <span class="spec">Poppins · 600 · 18/24</span>
+        </div>
+        <div class="type-sample">
+          <span style="font-family: var(--font-body); font-size: var(--text-base); line-height: 1.65;">Body copy. The default reading size for long-form content across the site.</span>
+          <span class="spec">Poppins · 400 · 16/26</span>
+        </div>
+        <div class="type-sample">
+          <span style="font-family: var(--font-body); font-size: var(--text-sm); color: var(--ink-500);">Caption and supporting metadata.</span>
+          <span class="spec">Poppins · 400 · 14/22</span>
+        </div>
+      </div>
+
+      <span class="eyebrow">Fraunces · editorial (pull quotes only)</span>
+      <div style="display: flex; flex-direction: column; gap: var(--space-4); margin-bottom: var(--space-6);">
+        <div class="type-sample">
+          <span class="editorial" style="font-size: var(--text-2xl); font-weight: 500;">A studio, not a vendor.</span>
+          <span class="spec">Fraunces · 500 · pull quote display</span>
+        </div>
+        <div class="type-sample">
+          <span style="font-family: var(--font-editorial); font-weight: 400; font-style: italic; font-size: var(--text-lg);">"We stay involved after launch."</span>
+          <span class="spec">Fraunces italic · 400 · pull quote body</span>
+        </div>
+      </div>
+
+      <span class="eyebrow">JetBrains Mono · technical metadata</span>
+      <div style="display: flex; flex-direction: column; gap: var(--space-4);">
+        <div class="type-sample">
+          <span style="font-family: var(--font-mono); font-size: var(--text-sm); color: var(--ink-700); font-weight: 500;">magenta-500 · #D80052</span>
+          <span class="spec">Mono · 500 · 14 · tokens and specs</span>
+        </div>
+        <div class="type-sample">
+          <span style="font-family: var(--font-mono); font-size: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-500);">01 · FOUNDATIONS</span>
+          <span class="spec">Mono · 500 · 12 · 0.08em · indices</span>
+        </div>
+        <div class="type-sample">
+          <span style="font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.05em; color: var(--ink-300);">PUBLISHED APR 2026 · V1.0 BASELINE</span>
+          <span class="spec">Mono · 400 · 11 · 0.05em · meta strings</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shadows -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">1.3</span>Depth</div>
+      <span class="eyebrow">Outset · raised surfaces</span>
+      <div class="grid grid-4" style="margin-bottom: var(--space-6);">
+        <div class="shadow-sample shadow-xs">shadow-xs</div>
+        <div class="shadow-sample shadow-sm">shadow-sm</div>
+        <div class="shadow-sample shadow-md">shadow-md</div>
+        <div class="shadow-sample shadow-lg">shadow-lg</div>
+      </div>
+      <span class="eyebrow">Inset · sunken surfaces</span>
+      <div class="grid grid-3">
+        <div class="shadow-sample shadow-in-xs">inset-xs</div>
+        <div class="shadow-sample shadow-in-sm">inset-sm</div>
+        <div class="shadow-sample shadow-in-md">inset-md</div>
+      </div>
+    </div>
+
+    <!-- Spacing -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">1.4</span>Spacing</div>
+      <div style="display: flex; flex-direction: column; gap: var(--space-3);">
+        <div class="space-row"><span class="space-label">space-1</span><div class="space-bar" style="width: 4px;"></div><span class="space-px">4px</span></div>
+        <div class="space-row"><span class="space-label">space-2</span><div class="space-bar" style="width: 8px;"></div><span class="space-px">8px</span></div>
+        <div class="space-row"><span class="space-label">space-3</span><div class="space-bar" style="width: 12px;"></div><span class="space-px">12px</span></div>
+        <div class="space-row"><span class="space-label">space-4</span><div class="space-bar" style="width: 16px;"></div><span class="space-px">16px</span></div>
+        <div class="space-row"><span class="space-label">space-5</span><div class="space-bar" style="width: 24px;"></div><span class="space-px">24px</span></div>
+        <div class="space-row"><span class="space-label">space-6</span><div class="space-bar" style="width: 32px;"></div><span class="space-px">32px</span></div>
+        <div class="space-row"><span class="space-label">space-7</span><div class="space-bar" style="width: 40px;"></div><span class="space-px">40px</span></div>
+        <div class="space-row"><span class="space-label">space-8</span><div class="space-bar" style="width: 48px;"></div><span class="space-px">48px</span></div>
+      </div>
+    </div>
+
+    <!-- Radius -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">1.5</span>Radius</div>
+      <div class="grid grid-4">
+        <div class="radius-sample r-sm">sm · 8px</div>
+        <div class="radius-sample r-md">md · 14px</div>
+        <div class="radius-sample r-lg">lg · 20px</div>
+        <div class="radius-sample r-xl">xl · 28px</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       COMPONENTS
+       ============================================================ -->
+  <section class="group" id="components">
+    <div class="group-heading">
+      <span class="index">02</span>
+      <h2>Components</h2>
+    </div>
+
+    <!-- Buttons -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">2.1</span>Buttons</div>
+      <p class="caption">Primary is magenta for every action-oriented moment. Secondary is neumorphic for alternate paths. Ghost for inline tertiary. Text for flat link-style CTAs inside cards or dense content. Accent (blue) is reserved for strategic secondary emphasis, at most once per visible section. Mono variant for technical microcopy.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center;">
+        <button class="btn btn-primary">Start a project</button>
+        <button class="btn btn-secondary">View our work</button>
+        <button class="btn btn-ghost">Learn more
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="btn btn-text">Read case study
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <button class="btn btn-accent">Our approach</button>
+        <button class="btn btn-secondary btn-mono">Docs →</button>
+        <button class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          Send inquiry
+        </button>
+      </div>
+      <div class="anatomy"><strong>btn.primary</strong><span class="divider">/</span>action-500<span class="divider">/</span>radius-md<span class="divider">/</span>shadow-sm</div>
+    </div>
+
+    <!-- Service Cards -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">2.2</span>Service Cards</div>
+      <p class="caption">Icons align at top, title tops align, paragraphs flow naturally beneath each title, Show toggles pin to the bottom edge. Icon glow reveals only on card hover. Toggle is ink at rest, magenta on engagement.</p>
+
+      <div class="grid grid-3">
+        <article class="card card-expandable" data-expandable>
+          <span class="card-marker">S/01</span>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
+          <h3>Brand Strategy</h3>
+          <div class="card-preview"><p>Positioning research, audience definition, voice development, and messaging frameworks that give every digital deliverable a consistent foundation.</p></div>
+          <button class="card-toggle" aria-expanded="false">Show <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        </article>
+
+        <article class="card card-expandable" data-expandable>
+          <span class="card-marker">S/02</span>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <h3>Information Architecture</h3>
+          <div class="card-preview"><p>Sitemaps, content modeling, navigation design, and editorial systems. We plan the structure before we build, so the site scales with your team.</p></div>
+          <button class="card-toggle" aria-expanded="false">Show <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        </article>
+
+        <article class="card card-expandable" data-expandable>
+          <span class="card-marker">S/03</span>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <h3>Development</h3>
+          <div class="card-preview"><p>Custom WordPress builds, web applications, CMS customization, and API integrations. Clean code, version control, staging environments, and documentation.</p></div>
+          <button class="card-toggle" aria-expanded="false">Show <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        </article>
+
+        <article class="card card-expandable" data-expandable>
+          <span class="card-marker">S/04</span>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+          <h3>SiteCare &amp; Stewardship</h3>
+          <div class="card-preview"><p>Hosting, monitoring, updates, content support, and long-term partnership. We stay involved after launch, so your platform keeps working year after year.</p></div>
+          <button class="card-toggle" aria-expanded="false">Show <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        </article>
+
+        <article class="card card-expandable" data-expandable>
+          <span class="card-marker">S/05</span>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
+          <h3>Mobile Applications</h3>
+          <div class="card-preview"><p>Native and cross-platform mobile apps, built for durability. From concept to app store submission, with the same stewardship model as our web work.</p></div>
+          <button class="card-toggle" aria-expanded="false">Show <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        </article>
+
+        <article class="card card-expandable" data-expandable>
+          <span class="card-marker">S/06</span>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <h3>Automation &amp; AI</h3>
+          <div class="card-preview"><p>Software integration, workflow automation, and practical AI implementation. Connect the tools you already use and reduce the manual work your team carries.</p></div>
+          <button class="card-toggle" aria-expanded="false">Show <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        </article>
+      </div>
+      <div class="anatomy"><strong>card.service</strong><span class="divider">/</span>shadow-md<span class="divider">/</span>radius-lg<span class="divider">/</span>icon.magenta<span class="divider">/</span>toggle.ink→magenta</div>
+    </div>
+
+    <!-- Service Cards (CTA button variant) -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">2.3</span>Service Cards (CTA button)</div>
+      <p class="caption">Same layout discipline as the expandable variant: icons top-align, title tops align, paragraphs flow naturally beneath each title, CTAs pin to the bottom with a guaranteed minimum gap above. Uses <code>btn-text</code> (flat text with a trailing arrow) so a page of service cards reads as a clean list rather than a wall of raised buttons. The arrow slides right on hover.</p>
+
+      <div class="grid grid-3">
+        <article class="card card-cta">
+          <span class="card-marker">S/01</span>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg></div>
+          <h3>Brand Strategy</h3>
+          <p>Positioning research, audience definition, voice development, and messaging frameworks that give every digital deliverable a consistent foundation.</p>
+          <button class="btn btn-text">Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </article>
+
+        <article class="card card-cta">
+          <span class="card-marker">S/02</span>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div>
+          <h3>Information Architecture</h3>
+          <p>Sitemaps, content modeling, navigation design, and editorial systems. We plan the structure before we build, so the site scales with your team.</p>
+          <button class="btn btn-text">Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </article>
+
+        <article class="card card-cta">
+          <span class="card-marker">S/03</span>
+          <div class="card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+          <h3>Development</h3>
+          <p>Custom WordPress builds, web applications, CMS customization, and API integrations. Clean code, version control, staging environments, and documentation.</p>
+          <button class="btn btn-text">Learn more
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+        </article>
+      </div>
+      <div class="anatomy"><strong>card.cta</strong><span class="divider">/</span>shadow-md<span class="divider">/</span>radius-lg<span class="divider">/</span>icon.magenta<span class="divider">/</span>btn.text</div>
+    </div>
+
+    <!-- Horizontal Tabs -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">2.4</span>Horizontal Tabs</div>
+      <p class="caption">Content-scoped tabs for sub-sections within a page: case study overviews, service detail tabs, documentation sections. Magenta underline on the active tab. Distinct from the page-level nav pill at the top. Tabs are content-scoped; the nav pill is page-scoped.</p>
+
+      <div class="tabs-horizontal" data-tabs>
+        <div class="tabs-horizontal-nav">
+          <button class="tab-horizontal active" data-tab-target="h-overview">Overview</button>
+          <button class="tab-horizontal" data-tab-target="h-process">Process</button>
+          <button class="tab-horizontal" data-tab-target="h-technology">Technology</button>
+          <button class="tab-horizontal" data-tab-target="h-results">Results</button>
+        </div>
+        <div class="tabs-horizontal-body">
+          <div class="tab-panel active" data-tab-panel="h-overview">
+            <h4>Community Arts Foundation · Membership Portal</h4>
+            <p>A discovery-led engagement to rebuild the foundation's member portal. Bilingual content, integrated donor management, tiered membership, and a SiteCare plan that keeps the platform current year after year.</p>
+          </div>
+          <div class="tab-panel" data-tab-panel="h-process">
+            <h4>Phased engagement</h4>
+            <p>Six weeks of discovery and planning, ten weeks of design and build, two weeks of content migration and QA, followed by a phased rollout to member tiers. Weekly client reviews throughout.</p>
+          </div>
+          <div class="tab-panel" data-tab-panel="h-technology">
+            <h4>Stack</h4>
+            <p>Custom WordPress with ACF for structured content, MemberPress for tier management, Spanish and English content modeling, and REST API integration with the existing donor system.</p>
+          </div>
+          <div class="tab-panel" data-tab-panel="h-results">
+            <h4>Outcomes</h4>
+            <p>Member renewal rates increased 34% in the first six months after launch. Bilingual site traffic grew 2x. The content team reports 60% less time spent on routine updates.</p>
+          </div>
+        </div>
+      </div>
+      <div class="anatomy"><strong>tabs.horizontal</strong><span class="divider">/</span>underline.magenta<span class="divider">/</span>border-b.ink-200</div>
+    </div>
+
+    <!-- Vertical Tabs -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">2.5</span>Vertical Tabs</div>
+      <p class="caption">For dense content or multi-step processes. The navigation rail sits in an inset well; the active tab raises out of it with neumorphic shadow. Works for process explainers, service detail pages, and documentation sections with many parents. Optional mono numerals give the rail a step-by-step rhythm.</p>
+
+      <div class="tabs-vertical" data-tabs>
+        <div class="tabs-vertical-nav">
+          <button class="tab-vertical active" data-tab-target="v-discovery">
+            <span class="tab-vertical-num">01</span>Discovery
+          </button>
+          <button class="tab-vertical" data-tab-target="v-planning">
+            <span class="tab-vertical-num">02</span>Planning
+          </button>
+          <button class="tab-vertical" data-tab-target="v-build">
+            <span class="tab-vertical-num">03</span>Build
+          </button>
+          <button class="tab-vertical" data-tab-target="v-launch">
+            <span class="tab-vertical-num">04</span>Launch
+          </button>
+          <button class="tab-vertical" data-tab-target="v-stewardship">
+            <span class="tab-vertical-num">05</span>Stewardship
+          </button>
+        </div>
+        <div class="tabs-vertical-body">
+          <div class="tab-panel active" data-tab-panel="v-discovery">
+            <h4>Discovery</h4>
+            <p>We start by understanding your work. Stakeholder interviews, content audits, technical reviews, and alignment on what you're building and why. Four to six weeks depending on scope.</p>
+          </div>
+          <div class="tab-panel" data-tab-panel="v-planning">
+            <h4>Planning</h4>
+            <p>Sitemaps, content models, wireframes, and a written scope with timeline and milestones. Design direction, content strategy, and integration architecture agreed before a line of code is written.</p>
+          </div>
+          <div class="tab-panel" data-tab-panel="v-build">
+            <h4>Build</h4>
+            <p>Custom development in a staging environment with weekly reviews. Version control, code review, and QA built into the process. Your team has access throughout.</p>
+          </div>
+          <div class="tab-panel" data-tab-panel="v-launch">
+            <h4>Launch</h4>
+            <p>DNS cutover planned in advance. Content migration completed. Staff training on the CMS. Active monitoring for the first 72 hours after go-live.</p>
+          </div>
+          <div class="tab-panel" data-tab-panel="v-stewardship">
+            <h4>Stewardship</h4>
+            <p>Your site enters SiteCare. Monthly updates, quarterly check-ins, and a support relationship that stays responsive. We're the same team that built it.</p>
+          </div>
+        </div>
+      </div>
+      <div class="anatomy"><strong>tabs.vertical</strong><span class="divider">/</span>rail.inset<span class="divider">/</span>active.raised<span class="divider">/</span>color.magenta</div>
+    </div>
+
+    <!-- Accordion -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">2.6</span>Accordion</div>
+      <p class="caption">For FAQs, process steps, or dense information that needs progressive disclosure. Open state fills the icon tile with magenta for clear state feedback.</p>
+      <div class="accordion">
+        <div class="accordion-item is-open" data-accordion>
+          <button class="accordion-trigger" aria-expanded="true">
+            <span><span class="accordion-number">01</span>What does the SiteCare plan include?</span>
+            <span class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+          <div class="accordion-panel">
+            <div class="accordion-content">Hosting on managed WordPress infrastructure, plugin and core updates, daily backups, security monitoring, uptime monitoring, and a monthly allotment of content and technical support hours. Plan tiers scale with the complexity of your site.</div>
+          </div>
+        </div>
+        <div class="accordion-item" data-accordion>
+          <button class="accordion-trigger" aria-expanded="false">
+            <span><span class="accordion-number">02</span>How long does a typical website project take?</span>
+            <span class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+          <div class="accordion-panel">
+            <div class="accordion-content">Most sites run 8 to 16 weeks from kickoff to launch. More complex work with multilingual content, integrations, or custom applications can take longer. We share a phased timeline in every proposal.</div>
+          </div>
+        </div>
+        <div class="accordion-item" data-accordion>
+          <button class="accordion-trigger" aria-expanded="false">
+            <span><span class="accordion-number">03</span>Do you work with agencies as a development partner?</span>
+            <span class="accordion-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+          </button>
+          <div class="accordion-panel">
+            <div class="accordion-content">Yes. We operate as a development and infrastructure partner to branding, marketing, and design agencies. The agency keeps the client relationship, our team handles technical execution. Our Agency Partners page explains how the partnership works.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forms -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">2.7</span>Form Elements</div>
+      <p class="caption">Focus rings, checked states, and active toggles all use magenta. Required-field and character-count metadata render in mono, right-aligned in the label row.</p>
+      <div style="max-width: 580px; display: flex; flex-direction: column; gap: var(--space-5);">
+        <div class="field">
+          <label for="d-name">Your name <span class="field-meta">REQUIRED</span></label>
+          <input class="input" id="d-name" type="text" placeholder="Jane Cooper" />
+        </div>
+        <div class="field is-error">
+          <label for="d-email">Email <span class="field-meta">REQUIRED</span></label>
+          <input class="input" id="d-email" type="email" placeholder="jane@organization.org" value="jane@org" />
+          <div class="field-error">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Please include a valid domain (example: jane@organization.org)
+          </div>
+        </div>
+        <div class="field">
+          <label for="d-sector">Sector <span class="field-meta">OPTIONAL</span></label>
+          <select class="select" id="d-sector">
+            <option>Nonprofit</option>
+            <option>Arts &amp; Culture</option>
+            <option>Healthcare</option>
+            <option>Education</option>
+            <option>Industrial</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="d-msg">Tell us about the project <span class="field-meta">0 / 500</span></label>
+          <textarea class="textarea" id="d-msg" placeholder="What are you trying to build?"></textarea>
+        </div>
+        <div style="display: flex; gap: var(--space-6); flex-wrap: wrap; align-items: center;">
+          <label class="checkbox-row">
+            <input type="checkbox" checked />
+            <span class="checkbox-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
+            <span>Subscribe to Insights</span>
+          </label>
+          <div style="display: flex; align-items: center; gap: var(--space-3);">
+            <span style="font-size: var(--text-sm); color: var(--ink-700);">Needs translation</span>
+            <div class="toggle" data-toggle><div class="toggle-knob"></div></div>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="align-self: flex-start;">Submit inquiry</button>
+      </div>
+    </div>
+
+    <!-- Pull Quote -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">2.8</span>Pull Quote &amp; Testimonial</div>
+      <p class="caption">The one component where Fraunces appears across the entire system. Reserved for testimonial copy, editorial openings, and case study introductions. Attribution title runs in mono for contrast.</p>
+      <div class="pullquote">
+        <span class="mark">"</span>
+        <blockquote>New Urban Media handled the technical complexity of our membership migration while keeping our team in the loop. Two years later, the site is still running the way they set it up.</blockquote>
+        <div class="pullquote-attr">
+          <div class="pullquote-avatar"></div>
+          <div>
+            <div class="pullquote-name">Elena Morales</div>
+            <div class="pullquote-title">DIR. OPERATIONS · COMMUNITY ARTS FOUNDATION</div>
+          </div>
+        </div>
+      </div>
+      <div class="anatomy"><strong>pullquote</strong><span class="divider">/</span>fraunces.editorial<span class="divider">/</span>shadow-md<span class="divider">/</span>attr.mono</div>
+    </div>
+
+    <!-- Badges -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">2.9</span>Badges &amp; Tags</div>
+      <p class="caption">Standard badges use Poppins. The info badge uses the blue accent. Mono badges are reserved for technical labels: category codes, version tags, environment indicators.</p>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; margin-bottom: var(--space-4);">
+        <span class="badge badge-brand">Featured</span>
+        <span class="badge badge-info">New</span>
+        <span class="badge badge-neutral">Nonprofit</span>
+        <span class="badge badge-success"><span class="badge-dot"></span>Active</span>
+        <span class="badge badge-warning"><span class="badge-dot"></span>In review</span>
+        <span class="badge badge-error"><span class="badge-dot"></span>Needs attention</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center;">
+        <span class="badge badge-mono badge-neutral">WP 6.5</span>
+        <span class="badge badge-mono badge-info">V2.1</span>
+        <span class="badge badge-mono badge-brand">CASE/042</span>
+        <span class="badge badge-mono badge-success">DEPLOYED</span>
+      </div>
+    </div>
+
+    <!-- Callout -->
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">2.10</span>Info Callout</div>
+      <p class="caption">For contextual notes and supplementary information. Uses the blue accent as its identifying color. Reserve for moments where information genuinely aids the reader.</p>
+      <div class="callout">
+        <div class="callout-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        </div>
+        <div>
+          <h4>Agency partnership model</h4>
+          <p>We operate as a development partner to branding and design agencies. The agency keeps the client relationship while our team handles technical execution. See the Agency Partners page for how engagements work.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PATTERNS
+       ============================================================ -->
+  <section class="group" id="patterns">
+    <div class="group-heading">
+      <span class="index">03</span>
+      <h2>Patterns</h2>
+    </div>
+
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">3.1</span>Hero Section</div>
+      <p class="caption">The homepage introduction. Poppins 800 H1 at 30-40px, magenta editorial eyebrow above, magenta primary CTA alongside a neumorphic secondary. Atmospheric gradient in magenta (top-right) and blue (bottom-left) gives the section dimension.</p>
+      <div class="hero">
+        <span class="hero-eyebrow">Development-led digital product studio</span>
+        <h1>Digital products built to last, by a team that stays involved.</h1>
+        <p>We design, build, and maintain websites, web applications, and mobile apps for organizations that need software they can rely on. Some clients have straightforward needs. Others need multilingual audiences, multiple locations, or compliance requirements handled with care.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary">Start a project
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </button>
+          <button class="btn btn-secondary">See our work</button>
+        </div>
+      </div>
+      <div class="anatomy"><strong>pattern.hero</strong><span class="divider">/</span>h1.poppins<span class="divider">/</span>eyebrow.mono<span class="divider">/</span>cta.magenta<span class="divider">/</span>atmos.magenta+blue</div>
+    </div>
+
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">3.2</span>Stats Band</div>
+      <p class="caption">Poppins 800 numbers in magenta for impact, sized at 28-36px. Mono labels beneath for technical contrast. Numbers earn attention by weight and color, labels stay categorical.</p>
+      <div class="stats">
+        <div class="stat"><div class="stat-num">157</div><div class="stat-label">Active brands</div></div>
+        <div class="stat"><div class="stat-num">18<span class="stat-suffix">yrs</span></div><div class="stat-label">In practice</div></div>
+        <div class="stat"><div class="stat-num">12</div><div class="stat-label">Sectors served</div></div>
+        <div class="stat"><div class="stat-num">2</div><div class="stat-label">Languages native</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       USAGE
+       ============================================================ -->
+  <section class="group" id="usage">
+    <div class="group-heading">
+      <span class="index">04</span>
+      <h2>Usage Guidelines</h2>
+    </div>
+
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">4.1</span>Color roles at a glance</div>
+      <table class="role-table">
+        <thead>
+          <tr><th>Color</th><th>Role</th><th>Appears in</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="chip" style="background:#D80052;"></span>Magenta <code>magenta-500</code></td>
+            <td>Primary voice</td>
+            <td>Logo, hero eyebrow, primary buttons, text links, focus rings, active nav, service icon tiles, accordion open state, stat numbers, section markers, toggle on state, checkbox checked</td>
+          </tr>
+          <tr>
+            <td><span class="chip" style="background:#0B7FBD;"></span>Blue <code>blue-500</code></td>
+            <td>Strategic accent</td>
+            <td>Info callouts, info badges, accent buttons (btn-accent), atmospheric gradients, charts and data variations. At most one blue element per visible section.</td>
+          </tr>
+          <tr>
+            <td><span class="chip" style="background:#DC2626;"></span>Red <code>error-500</code></td>
+            <td>Error only</td>
+            <td>Form validation messages, destructive action confirmations, critical alerts</td>
+          </tr>
+          <tr>
+            <td><span class="chip" style="background:#16A171;"></span>Green <code>success-500</code></td>
+            <td>Success</td>
+            <td>Status badges, confirmation messages, completion indicators</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="subgroup">
+      <div class="subgroup-title"><span class="code">4.2</span>Typography roles at a glance</div>
+      <table class="role-table">
+        <thead>
+          <tr><th>Face</th><th>Role</th><th>Used for</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Poppins</td>
+            <td>Workhorse</td>
+            <td>Every heading (H1–H5), all body copy, buttons, forms, navigation, microcopy, stat numbers</td>
+          </tr>
+          <tr>
+            <td>Fraunces</td>
+            <td>Editorial accent</td>
+            <td><strong>Only</strong> pull quote body. One location across the site.</td>
+          </tr>
+          <tr>
+            <td>JetBrains Mono</td>
+            <td>Technical metadata</td>
+            <td>Tokens, indices, specs, form meta, category tags, stat labels, badges, timestamps, footer strings, inline code</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout" style="margin-bottom: var(--space-6);">
+      <div class="callout-icon">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      </div>
+      <div>
+        <h4>Accessibility notes</h4>
+        <p>Magenta <code>#D80052</code> achieves 5.2:1 contrast against white, passing WCAG AA for all text. Blue <code>#0B7FBD</code> achieves 5.0:1. Text links on white use magenta-700 <code>#880035</code> at 10.4:1 for AAA contrast. Verify every text color against its rendered background during QA using Stark or axe.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="usage-card usage-do">
+        <h4><span class="mark-ico">✓</span> Do</h4>
+        <ul>
+          <li>Use Poppins for every heading from H1 through H5 across the entire site.</li>
+          <li>Use Fraunces only in pull quote body copy. Nowhere else.</li>
+          <li>Use JetBrains Mono for tokens, category labels, timestamps, form meta, stat labels, and any technical microcopy.</li>
+          <li>Use magenta for primary actions, links, focus rings, brand identity, and service pillar signatures.</li>
+          <li>Use blue strategically: at most one blue element per visible section, for info-state callouts, info badges, and moments that earn a second note.</li>
+          <li>Keep neumorphic depth on containers and passive surfaces. Use solid fills on interactive elements that carry meaning.</li>
+          <li>Maintain visible focus rings on every interactive element.</li>
+        </ul>
+      </div>
+      <div class="usage-card usage-dont">
+        <h4><span class="mark-ico">✕</span> Don't</h4>
+        <ul>
+          <li>Avoid Fraunces in any heading, body paragraph, button, form, caption, or UI element. Pull quotes only.</li>
+          <li>Avoid JetBrains Mono for headings or body paragraphs. It's strictly technical metadata.</li>
+          <li>Avoid blue where magenta would also work. Blue is an accent, not a second primary.</li>
+          <li>Avoid multiple blue elements in the same visible section.</li>
+          <li>Avoid stacking neumorphic surfaces more than two layers deep.</li>
+          <li>Avoid removing focus rings. They're required, not decorative.</li>
+          <li>Avoid oversize headlines. Page titles cap at ~44px, hero H1 at ~40px. Heading hierarchy communicates, size alone doesn't.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="page-footer">
+    <div><strong>NUM / Design System / v1.2</strong> · Extended · Internal</div>
+    <div>Apr 2026 · Memphis, TN</div>
+  </footer>
+
+</div>
+
+<script>
+  // Expandable cards
+  document.querySelectorAll('[data-expandable]').forEach(card => {
+    const toggle = card.querySelector('.card-toggle');
+    toggle.addEventListener('click', () => {
+      const isOpen = card.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', isOpen);
+      toggle.firstChild.textContent = isOpen ? 'Hide ' : 'Show ';
+    });
+  });
+
+  // Accordion
+  document.querySelectorAll('[data-accordion]').forEach(item => {
+    const trigger = item.querySelector('.accordion-trigger');
+    trigger.addEventListener('click', () => {
+      const isOpen = item.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', isOpen);
+    });
+  });
+
+  // Toggle
+  document.querySelectorAll('[data-toggle]').forEach(t => {
+    t.addEventListener('click', () => t.classList.toggle('is-on'));
+  });
+
+  // Tabs — both horizontal and vertical use [data-tabs] container,
+  // [data-tab-target] on buttons, [data-tab-panel] on content panels.
+  document.querySelectorAll('[data-tabs]').forEach(container => {
+    const buttons = container.querySelectorAll('[data-tab-target]');
+    const panels = container.querySelectorAll('[data-tab-panel]');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const target = btn.getAttribute('data-tab-target');
+        buttons.forEach(b => b.classList.toggle('active', b === btn));
+        panels.forEach(p => p.classList.toggle('active', p.getAttribute('data-tab-panel') === target));
+      });
+    });
+  });
+
+  // Section nav active state
+  const navLinks = document.querySelectorAll('.nav-pill a');
+  const sections = document.querySelectorAll('section.group');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      const rect = s.getBoundingClientRect();
+      if (rect.top < 180) current = s.id;
+    });
+    navLinks.forEach(l => {
+      l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+    });
+  });
+</script>
+
+</body>
+</html>
