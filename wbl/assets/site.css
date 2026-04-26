@@ -42,7 +42,7 @@
   --shadow-soft: 0 18px 38px -22px rgba(31, 46, 34, 0.18);
   --shadow-rest: 0 1px 0 rgba(31, 46, 34, 0.04);
 
-  --maxw: 1360px;
+  --maxw: 1366px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }

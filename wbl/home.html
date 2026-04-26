@@ -12,8 +12,8 @@
   /* Page-specific overrides */
   .hero { padding: 7.5rem 0 5.5rem; position: relative; overflow: hidden; }
   .hero-grid {
-    display: grid; grid-template-columns: 1.25fr 1fr;
-    gap: 5rem; align-items: center;
+    display: grid; grid-template-columns: 1.2fr 1fr;
+    gap: 4rem; align-items: center;
   }
   @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 3rem; } }
 
@@ -58,11 +58,18 @@
     flex-shrink: 0;
   }
   .hero-photo {
-    aspect-ratio: 4 / 5;
-    max-height: 620px;
+    aspect-ratio: 2048 / 2373;
+    width: 100%;
+    max-width: 560px;
+    margin-left: auto;
+  }
+  .hero-grid .photo-caption {
+    max-width: 560px;
+    margin-left: auto;
+    justify-content: flex-start;
   }
   @media (max-width: 900px) {
-    .hero-photo { aspect-ratio: 3 / 2; max-height: 480px; }
+    .hero-photo { aspect-ratio: 2048 / 2373; max-height: 560px; }
   }
   .about-photo {
     aspect-ratio: 4 / 5;
@@ -447,7 +454,8 @@
 
       <div class="reveal delay-2">
         <div class="photo-frame hero-photo">
-          <img src="assets/shell-sunset.jpg" alt="A delicate crab shell held up against an ocean sunset" loading="eager">
+          <img src="assets/shell-sunset.jpg?v=2" alt="A delicate crab shell held up against an ocean sunset" loading="eager">
+          <span class="nature-tag">Crab shell at sunset</span>
         </div>
         <div class="photo-caption">What's left behind, made beautiful</div>
       </div>
@@ -554,6 +562,7 @@
       <div class="reveal">
         <div class="photo-frame about-photo">
           <img src="assets/edie-portrait-formal.jpg" alt="Portrait of Edie Love" loading="lazy">
+          <span class="nature-tag">Edie Love, founder</span>
         </div>
         <div class="photo-caption">Edie Love, founder</div>
       </div>
