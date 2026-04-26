@@ -152,6 +152,32 @@
     font-variation-settings: "SOFT" 30, "opsz" 36;
   }
   .audience-card p { font-size: 1rem; }
+  .audience-card .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.08rem;
+    color: var(--moss);
+    border-bottom: 1px solid var(--moss);
+    padding-bottom: 2px;
+    align-self: flex-start;
+    transition: color 0.2s, border-color 0.2s, gap 0.2s;
+    font-variation-settings: "SOFT" 60, "WONK" 1;
+  }
+  .audience-card .card-cta:hover {
+    color: var(--moss-deep);
+    border-bottom-color: var(--moss-deep);
+    gap: 0.7rem;
+  }
+  .audience-card .card-cta .arrow {
+    font-style: normal;
+    font-family: var(--body);
+    transition: transform 0.2s;
+  }
+  .audience-card { display: flex; flex-direction: column; }
 
   /* POSITIONING */
   .positioning {
@@ -181,6 +207,8 @@
   .format {
     padding: 3rem 2.75rem;
     border-right: 1px solid rgba(244, 239, 229, 0.18);
+    display: flex;
+    flex-direction: column;
   }
   .format:last-child { border-right: none; }
   @media (max-width: 768px) {
@@ -223,6 +251,31 @@
     font-family: var(--mono);
   }
   .format p { color: rgba(244, 239, 229, 0.85); font-size: 0.98rem; }
+  .format-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 1.75rem;
+    align-self: flex-start;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--cream);
+    border-bottom: 1px solid rgba(244, 239, 229, 0.45);
+    padding-bottom: 3px;
+    transition: color 0.2s, border-color 0.2s, gap 0.2s;
+    font-variation-settings: "SOFT" 60, "WONK" 1;
+  }
+  .format-cta:hover {
+    color: #fff;
+    border-bottom-color: var(--cream);
+    gap: 0.7rem;
+  }
+  .format-cta .arrow {
+    font-style: normal;
+    font-family: var(--body);
+  }
 
   /* ABOUT */
   .about-preview { background: var(--cream); }
@@ -373,9 +426,7 @@
         <h1>Grief counseling with a <span class="accent-italic">practical application.</span></h1>
         <p class="hero-sub">Edie Love works with you on what grief, loss, or estrangement has made impossible. The closet you cannot face. The box you have not opened in years. Phone calls and errands that have been waiting.</p>
         <div class="hero-cta-row">
-          <a href="contact.html" class="btn btn-primary">
-            Reach Edie <span class="btn-arrow">→</span>
-          </a>
+          <a href="contact.html" class="btn btn-primary">Book an Introduction <span class="btn-arrow">→</span></a>
           <a href="#audience" class="btn btn-secondary">See how Edie can help</a>
         </div>
         <div class="hero-meta">
@@ -418,24 +469,28 @@
         <span class="label">After a death</span>
         <h3>The clothes are still in the closet.</h3>
         <p>A husband. A wife. A parent. A child. A beloved pet. The shirts are still hanging. The toolbox is still in the garage. You have started a few times and stopped. You know what needs to happen. You cannot make eighty decisions about what someone used to wear, by yourself.</p>
+        <a href="contact.html" class="card-cta">Book an Introduction <span class="arrow">→</span></a>
       </article>
 
       <article class="audience-card">
         <span class="label">After a divorce or separation</span>
         <h3>The marriage ended. The objects did not.</h3>
         <p>Wedding gifts. Photographs. Furniture from a family that is no longer your family. You got two drawers in last January and stopped. Edie does not have an opinion about the marriage. She works with you on what stays and what goes, in whatever order makes sense to you.</p>
+        <a href="contact.html" class="card-cta">Book an Introduction <span class="arrow">→</span></a>
       </article>
 
       <article class="audience-card">
         <span class="label">When family is estranged</span>
         <h3>The box has been on the shelf for years.</h3>
         <p>It came from a sibling, a parent, or an adult child you no longer speak to. You will not open it. You also will not throw it out without opening it. That is the loop. Edie does not ask you to explain the relationship. The work is about the box.</p>
+        <a href="contact.html" class="card-cta">Book an Introduction <span class="arrow">→</span></a>
       </article>
 
       <article class="audience-card">
         <span class="label">When the house has gotten away from you</span>
         <h3>You know what your home looks like.</h3>
         <p>You have lived alone with it for a long time. You have been carrying that quietly for years. Nothing about working with Edie involves a camera, a family member, or anyone in your home without your invitation. You set the pace. You decide what stays. You can stop a session at any point.</p>
+        <a href="contact.html" class="card-cta">Book an Introduction <span class="arrow">→</span></a>
       </article>
     </div>
   </div>
@@ -475,6 +530,7 @@
           <div><strong>2 hrs</strong><span>per session</span></div>
         </div>
         <p>Edie comes to your house. She physically handles items when you want her to, and most clients do. She can transport, donate, or dispose of items you decide to release. Memphis metro and farther by arrangement.</p>
+        <a href="contact.html" class="format-cta">Book an Introduction <span class="arrow">→</span></a>
       </div>
 
       <div class="format">
@@ -485,6 +541,7 @@
           <div><strong>2 hrs</strong><span>per session</span></div>
         </div>
         <p>Edie meets you over video. You hold the camera. She talks you through it. The privacy of a closed door you control. Edie has worked this way with clients in Canada, Los Angeles, Texas, and North Carolina.</p>
+        <a href="contact.html" class="format-cta">Book an Introduction <span class="arrow">→</span></a>
       </div>
     </div>
   </div>

@@ -28,6 +28,8 @@
     padding: 3rem 2.5rem;
     position: relative;
     transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
   }
   .session-card:hover {
     border-color: var(--rule);
@@ -77,6 +79,19 @@
   .session-card ul.features {
     list-style: none;
     margin: 1.25rem 0 0;
+  }
+  .session-card .session-cta-row {
+    margin-top: auto;
+    padding-top: 2rem;
+    text-align: center;
+  }
+  .session-card .session-cta-row .btn { width: 100%; justify-content: center; }
+  .session-card .session-cta-row .btn-note {
+    display: block;
+    margin-top: 0.85rem;
+    font-size: 0.82rem;
+    color: var(--sage);
+    font-style: italic;
   }
   .session-card ul.features li {
     padding: 0.7rem 0 0.7rem 1.5rem;
@@ -183,8 +198,13 @@
           <li>Two hours per session</li>
           <li>Memphis metro included; farther by arrangement</li>
           <li>Edie can handle and remove items at your direction</li>
+          <li>Reschedule with 24 hours' notice</li>
           <li>No camera, no audience, no agenda</li>
         </ul>
+        <div class="session-cta-row">
+          <a href="contact.html" class="btn btn-primary">Book an Introduction <span class="btn-arrow">→</span></a>
+          <span class="btn-note">A fifteen-minute introduction by phone. No charge.</span>
+        </div>
       </div>
 
       <div class="session-card">
@@ -201,6 +221,10 @@
           <li>You decide what Edie sees, and when</li>
           <li>Tablet-and-phone setups welcome</li>
         </ul>
+        <div class="session-cta-row">
+          <a href="contact.html" class="btn btn-primary">Book an Introduction <span class="btn-arrow">→</span></a>
+          <span class="btn-note">A fifteen-minute introduction by phone. No charge.</span>
+        </div>
       </div>
 
     </div>
@@ -268,7 +292,7 @@
       <p>Edie holds a small number of sliding-scale spots at any given time. There is no application form and no income proof. You mention it on the introduction call, and you and Edie agree on a rate.</p>
       <p>You will not be asked to justify the request, and the work itself is identical at any rate.</p>
       <div style="margin-top: 2rem;">
-        <a href="contact.html" class="btn btn-light">Start with the introduction <span class="btn-arrow">→</span></a>
+        <a href="contact.html" class="btn btn-light">Book an Introduction <span class="btn-arrow">→</span></a>
       </div>
     </div>
   </div>

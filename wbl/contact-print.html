@@ -87,8 +87,7 @@
   }
   @media (max-width: 600px) { .contact-form { padding: 2rem 1.5rem; } }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-  .form-row.location { grid-template-columns: 2fr 1fr 1fr; }
-  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; gap: 0; } .form-row.location { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; gap: 0; } }
   .form-group { margin-bottom: 1.5rem; }
   .form-label {
     display: block;
@@ -261,9 +260,191 @@
   .form-success p { margin: 0 auto 1.25rem; max-width: 50ch; }
 
   .after { background: var(--cream); }
+
+  /* ====== PRINT STYLES ====== */
+  @page {
+    size: letter portrait;
+    margin: 0.6in;
+  }
+  @media print {
+    * {
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
+      animation: none !important;
+      transition: none !important;
+    }
+    html, body {
+      background: var(--cream) !important;
+    }
+    /* Hide nav, footer, options-grid action links */
+    .nav, footer, .skip-link { display: none !important; }
+    /* Reset paddings for print */
+    section { padding: 0 !important; }
+    .container { max-width: 100% !important; padding: 0 !important; }
+
+    /* Hero */
+    .hero { padding: 0 0 1.5rem !important; text-align: left !important; }
+    .hero .container { max-width: 100% !important; }
+    .hero .eyebrow { margin-bottom: 0.75rem !important; }
+    .hero h1 {
+      font-size: 2.4rem !important;
+      margin-bottom: 0.85rem !important;
+    }
+    .hero-sub {
+      font-size: 1.02rem !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      line-height: 1.55 !important;
+    }
+    .eyebrow.centered, .form-section .section-head { text-align: left !important; }
+
+    /* Options grid: keep three across, compact */
+    .options { padding: 1rem 0 1.5rem !important; break-inside: avoid; }
+    .options-grid {
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 0.75rem !important;
+      max-width: 100% !important;
+    }
+    .option-card {
+      padding: 1.1rem 0.9rem !important;
+      box-shadow: none !important;
+      transform: none !important;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+    .option-icon {
+      width: 26px !important;
+      height: 26px !important;
+      margin-bottom: 0.6rem !important;
+    }
+    .option-card h3 {
+      font-size: 1.05rem !important;
+      margin-bottom: 0.4rem !important;
+    }
+    .option-card p {
+      font-size: 0.78rem !important;
+      margin-bottom: 0.6rem !important;
+    }
+    .option-action {
+      font-size: 0.85rem !important;
+      border-bottom: none !important;
+    }
+
+    /* Form section header */
+    .form-section {
+      background: transparent !important;
+      border: none !important;
+      break-before: page;
+    }
+    .form-section .section-head {
+      margin: 0 0 1.25rem !important;
+      max-width: 100% !important;
+    }
+    .form-section .section-head h2 {
+      font-size: 1.8rem !important;
+      margin-top: 0.5rem !important;
+      margin-bottom: 0.6rem !important;
+    }
+    .form-section .section-head p {
+      font-size: 0.95rem !important;
+      max-width: 100% !important;
+    }
+
+    /* Contact form: render as a static printable form */
+    .contact-form {
+      max-width: 100% !important;
+      padding: 1.25rem !important;
+      background: var(--soft-white) !important;
+      border: 1px solid var(--rule-soft) !important;
+      break-inside: avoid;
+    }
+    .form-row { gap: 1rem !important; }
+    .form-group { margin-bottom: 0.85rem !important; break-inside: avoid; }
+    .form-label {
+      font-size: 0.82rem !important;
+      margin-bottom: 0.3rem !important;
+    }
+    .form-input, .form-textarea, .form-select {
+      padding: 0.55rem 0.7rem !important;
+      font-size: 0.9rem !important;
+      background: #fff !important;
+      border: 1px solid #c8bfaa !important;
+    }
+    .form-textarea { min-height: 90px !important; }
+    .form-helper { font-size: 0.78rem !important; margin-top: 0.3rem !important; }
+    .form-error { display: none !important; }
+
+    .form-consent { margin-top: 0.4rem !important; }
+    .consent-label {
+      padding: 0.6rem 0.75rem !important;
+      background: #fff !important;
+    }
+    .consent-text { font-size: 0.82rem !important; }
+
+    .form-submit-row { margin-top: 1rem !important; text-align: left !important; }
+    .form-submit-row .btn {
+      background: var(--forest) !important;
+      color: var(--cream) !important;
+      padding: 0.65rem 1.25rem !important;
+      font-size: 0.9rem !important;
+      box-shadow: none !important;
+      transform: none !important;
+    }
+
+    /* "After" section — hide for a single-page form-focused PDF */
+    .after { display: none !important; }
+
+    /* Hide tweaks panel if it was open */
+    [id*="tweaks"], [class*="tweaks"], [class*="Tweaks"] { display: none !important; }
+
+    /* Print-only header */
+    .print-only { display: block !important; }
+    .print-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.85rem;
+      border-bottom: 1px solid var(--rule-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .print-header .brand {
+      font-family: var(--display);
+      font-size: 1.4rem;
+      font-style: italic;
+      color: var(--forest);
+      font-variation-settings: "SOFT" 80, "WONK" 1;
+    }
+    .print-header .brand .by { font-style: italic; opacity: 0.7; padding: 0 0.15rem; }
+    .print-header .meta {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+
+    /* Print-only contact line */
+    .print-contact {
+      margin-top: 1.25rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--rule-soft);
+      font-size: 0.82rem;
+      color: var(--slate);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .print-contact strong { color: var(--forest); font-weight: 500; }
+  }
+  .print-only { display: none; }
 </style>
 </head>
 <body>
+
+<div class="print-only print-header">
+  <div class="brand">Works <span class="by">by</span> Love</div>
+  <div class="meta">Contact · 901.598.3343</div>
+</div>
 
 <nav class="nav" id="nav">
   <div class="nav-inner">
@@ -357,39 +538,6 @@
         </div>
       </div>
 
-      <div class="form-row location">
-        <div class="form-group" data-field="city">
-          <label for="city" class="form-label">City</label>
-          <input type="text" id="city" name="city" class="form-input" placeholder="e.g. Memphis" autocomplete="address-level2" required>
-          <p class="form-error">Please share your city.</p>
-        </div>
-        <div class="form-group" data-field="state">
-          <label for="state" class="form-label">State</label>
-          <select id="state" name="state" class="form-select" required autocomplete="address-level1">
-            <option value="">Choose</option>
-            <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option>
-            <option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option>
-            <option>District of Columbia</option><option>Florida</option><option>Georgia</option><option>Hawaii</option>
-            <option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option>
-            <option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option>
-            <option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option>
-            <option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option>
-            <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option>
-            <option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option>
-            <option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
-            <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option>
-            <option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option>
-            <option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
-          </select>
-          <p class="form-error">Please choose a state.</p>
-        </div>
-        <div class="form-group" data-field="zip">
-          <label for="zip" class="form-label">ZIP code</label>
-          <input type="text" id="zip" name="zip" class="form-input" placeholder="38104" autocomplete="postal-code" inputmode="numeric" pattern="\d{5}(-\d{4})?" required>
-          <p class="form-error">Please enter a 5-digit ZIP.</p>
-        </div>
-      </div>
-
       <div class="form-group" data-field="topic">
         <label for="topic" class="form-label">What brought you here?</label>
         <select id="topic" name="topic" class="form-select" required>
@@ -425,13 +573,18 @@
       </div>
     </form>
 
+    <div class="print-only print-contact">
+      <span><strong>Reach Edie:</strong> 901.598.3343 · worksbylove.com</span>
+      <span>Memphis, Tennessee</span>
+    </div>
+
     <div class="form-success" id="cf-success" role="status" aria-live="polite">
       <div class="seal">✓</div>
       <h3>Message received.</h3>
       <p>Thank you for sharing that. The next step is to choose a time for your fifteen-minute introduction by phone — no charge, no commitment.</p>
       <p>If your selected time doesn't work, Edie will follow up by email to find one that does.</p>
       <p style="margin-top: 1.75rem;">
-        <a href="#" class="btn btn-primary">Book an Introduction <span class="btn-arrow">→</span></a>
+        <a href="#" class="btn btn-primary">Book your introduction <span class="btn-arrow">→</span></a>
       </p>
       <p style="margin-top: 1.25rem; font-size: 0.92rem; color: var(--sage);">Or wait to hear from Edie directly — she replies within a day or two.</p>
     </div>
@@ -501,9 +654,6 @@
     lastName: document.getElementById('lastName'),
     email: document.getElementById('email'),
     phone: document.getElementById('phone'),
-    city: document.getElementById('city'),
-    state: document.getElementById('state'),
-    zip: document.getElementById('zip'),
     topic: document.getElementById('topic'),
     message: document.getElementById('message'),
     consent: document.getElementById('consent')
@@ -522,9 +672,6 @@
       if (key === 'phone') {
         ok = ok && /[\d]{7,}/.test(el.value.replace(/\D/g, ''));
       }
-      if (key === 'zip') {
-        ok = ok && /^\d{5}(-\d{4})?$/.test(el.value.trim());
-      }
       if (key === 'message') {
         ok = el.value.trim().length >= 2;
       }
@@ -539,7 +686,7 @@
     return ok;
   }
   Object.keys(fields).forEach((k) => {
-    const evt = (k === 'consent' || k === 'topic' || k === 'state') ? 'change' : 'blur';
+    const evt = (k === 'consent' || k === 'topic') ? 'change' : 'blur';
     fields[k].addEventListener(evt, () => validateField(k));
     fields[k].addEventListener('input', () => {
       if (form.querySelector(`[data-field="${k}"]`).classList.contains('has-error')) validateField(k);
@@ -563,8 +710,19 @@
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script type="text/babel" src="assets/tweaks-panel.jsx"></script>
-<script type="text/babel" src="assets/tweaks-app.jsx"></script>
+
+<script>
+  // Auto-print once fonts and layout are ready
+  (async () => {
+    try {
+      if (document.fonts && document.fonts.ready) {
+        await document.fonts.ready;
+      }
+    } catch (e) {}
+    await new Promise(r => setTimeout(r, 500));
+    window.print();
+  })();
+</script>
 
 </body>
 </html>
