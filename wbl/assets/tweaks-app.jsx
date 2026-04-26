@@ -1,8 +1,8 @@
 // Tweaks panel — palette + typography pairing
 const PALETTES = {
   forest: {
-    label: "Forest & Slate",
-    swatches: ["#1e2c22", "#56684f", "#4d6373", "#f3ede1"],
+    label: "Forest & Mahogany",
+    swatches: ["#1e2c22", "#56684f", "#7a4232", "#f3ede1"],
     vars: {
       "--cream": "#f3ede1",
       "--cream-soft": "#f7f2e6",
@@ -11,8 +11,8 @@ const PALETTES = {
       "--forest-deep": "#131e17",
       "--moss": "#56684f",
       "--moss-deep": "#41513c",
-      "--slate": "#4d6373",
-      "--rust": "#8a4f3c",
+      "--slate": "#7a4232",
+      "--rust": "#7a4232",
       "--rule": "#c9c1b1",
       "--rule-soft": "#ddd5c4"
     }

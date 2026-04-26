@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=2">
+<link rel="stylesheet" href="assets/site.css?v=14">
 <style>
   .hero { padding: 7rem 0 5rem; }
   .hero-grid {
@@ -82,7 +82,7 @@
     font-size: 0.66rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--slate);
+    color: var(--ink);
     margin-bottom: 1rem;
   }
   .fact .value {
@@ -98,6 +98,142 @@
   .narrative-alt { background: var(--soft-white); border-top: 1px solid var(--rule-soft); border-bottom: 1px solid var(--rule-soft); }
   .narrative { background: var(--cream); }
 
+  /* Book detail in inside-out section */
+  .io-book {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.55), 0 8px 24px -8px rgba(0,0,0,0.35);
+  }
+  .io-book img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .io-book-caption {
+    margin-top: 1.25rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--ink-light);
+  }
+  .io-book-caption strong {
+    display: block;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.08rem;
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--cream);
+    margin-top: 0.5rem;
+    font-variation-settings: "SOFT" 80, "WONK" 1, "opsz" 60;
+  }
+  .io-book-caption span.author {
+    display: block;
+    margin-top: 0.4rem;
+    color: rgba(244, 239, 229, 0.55);
+    font-family: var(--body);
+    font-style: normal;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.85rem;
+  }
+  @media (max-width: 900px) {
+    .io-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+  }
+
+  /* Legend banner */
+  .legend-banner {
+    background: #0d0d0d;
+    padding: 0;
+    overflow: hidden;
+  }
+  .legend-grid {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    align-items: stretch;
+    min-height: 520px;
+  }
+  @media (max-width: 800px) { .legend-grid { grid-template-columns: 1fr; } }
+  .legend-image {
+    background-image: url('assets/edie-legend-graphic.png');
+    background-size: cover;
+    background-position: center;
+    background-color: #0d0d0d;
+    min-height: 420px;
+  }
+  .legend-text {
+    padding: 5rem 4.5rem;
+    color: var(--cream);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  @media (max-width: 800px) { .legend-text { padding: 3rem 1.5rem; } }
+  .legend-text .eyebrow {
+    color: rgba(244, 239, 229, 0.55);
+  }
+  .legend-text h2 {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(2rem, 4vw, 2.85rem);
+    line-height: 1.1;
+    margin: 1.25rem 0 1.75rem;
+    font-variation-settings: "SOFT" 80, "WONK" 1, "opsz" 100;
+    color: var(--cream);
+  }
+  .legend-text p {
+    color: rgba(244, 239, 229, 0.78);
+    max-width: 38ch;
+    font-size: 1.06rem;
+    line-height: 1.7;
+  }
+  .legend-text p + p { margin-top: 1.1rem; }
+
+  /* Plaque shelf detail */
+  .shelf-detail {
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    align-items: center;
+    padding-top: 3rem;
+    border-top: 1px solid var(--rule-soft);
+    max-width: 720px;
+  }
+  @media (max-width: 600px) { .shelf-detail { grid-template-columns: 1fr; } }
+  .shelf-detail-photo {
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 14px 30px -12px rgba(0,0,0,0.25), 0 4px 12px -4px rgba(0,0,0,0.18);
+  }
+  .shelf-detail-photo img { display: block; width: 100%; height: auto; }
+  .shelf-detail-caption .label {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    color: var(--ink);
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+  .shelf-detail-caption p {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.18rem;
+    line-height: 1.4;
+    color: var(--forest);
+    font-variation-settings: "SOFT" 80, "WONK" 1, "opsz" 60;
+  }
+  .shelf-detail-caption .attrib {
+    margin-top: 0.6rem;
+    font-family: var(--body);
+    font-style: normal;
+    font-size: 0.88rem;
+    color: var(--ink);
+  }
+
   .inside-out-body { max-width: 60ch; margin: 2rem 0 3.5rem; }
   .inside-out-body p { font-size: 1.075rem; margin-bottom: 1.4rem; }
   .inside-out-quote {
@@ -106,7 +242,7 @@
     font-size: clamp(1.5rem, 2.6vw, 2.1rem);
     line-height: 1.32;
     color: var(--cream);
-    border-left: 3px solid var(--rust);
+    border-left: 3px solid var(--sage-light);
     padding-left: 2rem;
     max-width: 32ch;
     font-variation-settings: "SOFT" 100, "opsz" 80;
@@ -116,7 +252,7 @@
     font-style: normal;
     font-family: var(--body);
     font-size: 0.74rem;
-    color: var(--sage-light);
+    color: var(--ink-light);
     margin-top: 1.25rem;
     text-transform: uppercase;
     letter-spacing: 0.24em;
@@ -134,7 +270,7 @@
 
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="home.html" class="logo">Works <span class="by">by</span> Love</a>
+    <a href="home.html" class="logo">Works <span class="by">by</span> <span class="love">Love</span></a>
     <ul class="nav-links">
       <li><a href="home.html#audience">The Work</a></li>
       <li><a href="about.html" class="current">About Edie</a></li>
@@ -224,7 +360,7 @@
         <h2 style="margin-top: 1.25rem;">Edie has done this work <em class="soft">in her own life.</em></h2>
         <div class="inside-out-body">
           <p>Edie grew up in a family of people who held onto things. Her mother. Her grandmother. Her father. Three generations.</p>
-          <p>She has struggled with the pattern herself as an adult. She has known what it is to look at a room and not know where to start. She has known the shame of letting a house get away from her. She has known what it is to not invite anyone over.</p>
+          <p>She has struggled with the pattern herself as an adult. She has known what it is to look at a room and not know where to start. She has known what it is to let a house get away from her. She has known what it is to not invite anyone over.</p>
           <p>She has also done the work to move through it. That is part of why she can sit with you in it. She is not on the outside looking in.</p>
         </div>
         <blockquote class="inside-out-quote">
@@ -232,7 +368,16 @@
           <cite>— Edie</cite>
         </blockquote>
       </div>
-      <div id="io-image" style="margin-top: 4rem;"></div>
+      <div id="io-image" style="margin-top: 4rem;">
+        <div class="io-book">
+          <img src="assets/edie-book-decluttering.jpg" alt="A copy of the book Nobody Wants Your Sh*t: The Art of Decluttering Before You Die, by Messie Condo, held in front of a sunlit window." loading="lazy">
+        </div>
+        <div class="io-book-caption">
+          On Edie's shelf
+          <strong>“Nobody Wants Your Sh*t — The Art of Decluttering Before You Die.”</strong>
+          <span class="author">Messie Condo. A book Edie keeps near.</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -272,8 +417,22 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="home.html" class="logo">Works <span class="by">by</span> Love</a>
+        <a href="home.html" class="logo">Works <span class="by">by</span> <span class="love">Love</span></a>
         <p>Grief counseling with a practical application. In your home in Memphis, or on Zoom anywhere in North America.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/worksbylove/" aria-label="Instagram" target="_blank" rel="noopener">
+            <span class="icon icon-instagram" aria-hidden="true"></span>
+          </a>
+          <a href="https://www.facebook.com/ReverendEdithALove" aria-label="Facebook" target="_blank" rel="noopener">
+            <span class="icon icon-facebook" aria-hidden="true"></span>
+          </a>
+          <a href="https://www.linkedin.com/in/edith-love-33294446/" aria-label="LinkedIn" target="_blank" rel="noopener">
+            <span class="icon icon-linkedin" aria-hidden="true"></span>
+          </a>
+          <a href="contact.html" aria-label="Email Edie">
+            <span class="icon icon-email" aria-hidden="true"></span>
+          </a>
+        </div>
       </div>
       <div>
         <h4>Site</h4>
@@ -303,10 +462,7 @@
 
 <script src="assets/nature-scenes.js"></script>
 <script>
-  document.getElementById('io-image').innerHTML = NatureScenes.branch({
-    tag: "Detail \u2014 placeholder",
-    caption: "Bare branch, late winter"
-  });
+  document.getElementById('io-image');
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     if (window.scrollY > 30) nav.classList.add('scrolled');

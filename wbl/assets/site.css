@@ -18,10 +18,17 @@
   --sage:         #6e7b69;
   --sage-light:   #aab3a2;
 
-  --slate:        #4d6373;
-  --slate-mid:    #6d8290;
-  --slate-light:  #94a4ad;
-  --slate-deep:   #2f4252;
+  /* Warm mahogany family — used ONLY for the word "Love" in the wordmark. */
+  --slate:        #7a4232;
+  --slate-mid:    #9a5b48;
+  --slate-light:  #b88472;
+  --slate-deep:   #4f2a20;
+
+  /* Small-text accent (eyebrows, captions, mono labels, helpers).
+     Sage-green family — readable on cream, kinder than blue for accessibility. */
+  --ink:          #4d6353;  /* deep sage — strong contrast for small uppercase text on cream */
+  --ink-soft:     #6e8472;  /* mid sage — secondary captions */
+  --ink-light:    #aab3a2;  /* light sage — for use on dark forest backgrounds */
 
   --charcoal:     #2a2823;
   --rust:         #8a4f3c;
@@ -35,7 +42,7 @@
   --shadow-soft: 0 18px 38px -22px rgba(31, 46, 34, 0.18);
   --shadow-rest: 0 1px 0 rgba(31, 46, 34, 0.04);
 
-  --maxw: 1180px;
+  --maxw: 1360px;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -104,7 +111,7 @@ a:hover { color: var(--moss); }
   font-size: 0.74rem;
   text-transform: uppercase;
   letter-spacing: 0.26em;
-  color: var(--slate);
+  color: var(--ink);
   font-weight: 600;
   display: inline-flex;
   align-items: center;
@@ -114,9 +121,9 @@ a:hover { color: var(--moss); }
   content: "";
   width: 22px;
   height: 1px;
-  background: var(--slate);
+  background: var(--ink);
   display: inline-block;
-  opacity: 0.55;
+  opacity: 0.7;
 }
 .eyebrow.centered { display: inline-flex; }
 
@@ -210,7 +217,7 @@ section[id] { scroll-margin-top: 96px; }
 }
 .nav-cta:hover {
   background: var(--moss);
-  color: var(--cream) !important;
+  color: #fff !important;
 }
 .nav-cta::after { display: none; }
 @media (max-width: 768px) {
@@ -362,8 +369,8 @@ section[id] { scroll-margin-top: 96px; }
 .dark-section h2,
 .dark-section h3 { color: var(--cream); }
 .dark-section p { color: rgba(244, 239, 229, 0.86); }
-.dark-section .eyebrow { color: var(--sage-light); }
-.dark-section .eyebrow::before { background: var(--sage-light); }
+.dark-section .eyebrow { color: var(--ink-light); }
+.dark-section .eyebrow::before { background: var(--ink-light); }
 
 /* ============ FOOTER ============ */
 footer {
@@ -383,12 +390,64 @@ footer {
   margin-bottom: 1rem;
   display: inline-flex;
 }
-.footer-brand .logo .by { color: var(--sage-light); }
+.footer-brand .logo .by { color: var(--ink-light); }
 .footer-brand p {
   font-size: 0.95rem;
   color: rgba(244, 239, 229, 0.62);
   max-width: 38ch;
   margin-top: 0.6rem;
+}
+.footer-social {
+  display: flex;
+  gap: 1.1rem;
+  margin-top: 1.75rem;
+}
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  transition: color 0.2s, transform 0.2s, opacity 0.2s;
+  opacity: 0.92;
+}
+.footer-social a:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+.footer-social svg {
+  width: 30px;
+  height: 30px;
+  fill: #ffffff;
+  flex: none;
+}
+.footer-social .icon {
+  display: inline-block;
+  width: 22px;
+  height: 22px;
+  background-color: currentColor;
+  -webkit-mask-position: center;
+          mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+          mask-size: contain;
+  flex: none;
+}
+.footer-social .icon-instagram {
+  -webkit-mask-image: url('social-instagram.svg');
+          mask-image: url('social-instagram.svg');
+}
+.footer-social .icon-facebook {
+  -webkit-mask-image: url('social-facebook.svg');
+          mask-image: url('social-facebook.svg');
+}
+.footer-social .icon-linkedin {
+  -webkit-mask-image: url('social-linkedin.svg');
+          mask-image: url('social-linkedin.svg');
+}
+.footer-social .icon-email {
+  -webkit-mask-image: url('social-email.svg');
+          mask-image: url('social-email.svg');
 }
 footer h4 {
   color: var(--cream);
@@ -439,10 +498,10 @@ footer a:hover { color: var(--cream); }
 /* ============ TYPOGRAPHIC HELPERS ============ */
 .accent-italic {
   font-style: italic;
-  color: var(--slate);
+  color: var(--moss);
   font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
 }
-.dark-section .accent-italic { color: var(--sage-light); }
+.dark-section .accent-italic { color: var(--ink-light); }
 
 .measure { max-width: 56ch; }
 .measure-tight { max-width: 44ch; }
@@ -454,7 +513,7 @@ footer a:hover { color: var(--cream); }
   font-size: clamp(1.4rem, 2.4vw, 2rem);
   line-height: 1.32;
   color: var(--forest);
-  border-left: 2px solid var(--rust);
+  border-left: 2px solid var(--moss);
   padding-left: 1.75rem;
   margin: 2rem 0;
   font-variation-settings: "SOFT" 100, "opsz" 80;
@@ -466,13 +525,13 @@ footer a:hover { color: var(--cream); }
   font-style: normal;
   font-family: var(--body);
   font-size: 0.74rem;
-  color: var(--sage);
+  color: var(--ink);
   margin-top: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.24em;
   font-weight: 600;
 }
-.dark-section .pullquote cite { color: var(--sage-light); }
+.dark-section .pullquote cite { color: var(--ink-light); }
 
 /* Two-column narrative slab (eyebrow+title left, body right) */
 .slab {
@@ -508,8 +567,8 @@ footer a:hover { color: var(--cream); }
   font-family: var(--mono);
   font-size: 0.78rem;
   letter-spacing: 0.16em;
-  color: var(--slate);
-  opacity: 0.7;
+  color: var(--ink);
+  opacity: 0.85;
 }
 
 /* Tweaks toggle pill (visible only when tweaks panel is on) */

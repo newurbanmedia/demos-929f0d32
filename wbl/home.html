@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..900,0..100,0..1;1,9..144,300..900,0..100,0..1&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..600&family=Inter:wght@400;500;600&family=Work+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css?v=2">
+<link rel="stylesheet" href="assets/site.css?v=14">
 <style>
   /* Page-specific overrides */
   .hero { padding: 7.5rem 0 5.5rem; position: relative; overflow: hidden; }
@@ -45,7 +45,7 @@
     font-size: 0.7rem;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--slate);
+    color: var(--ink);
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -54,7 +54,7 @@
     content: "";
     width: 18px;
     height: 1px;
-    background: var(--slate);
+    background: var(--ink);
     flex-shrink: 0;
   }
   .hero-photo {
@@ -95,7 +95,7 @@
     font-size: 0.74rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--slate);
+    color: var(--ink);
     line-height: 1.65;
   }
   .hero-meta strong {
@@ -127,7 +127,7 @@
     padding: 2.5rem 2.25rem;
     border-radius: 4px;
     border: 1px solid var(--rule-soft);
-    border-left: 3px solid var(--sage-light);
+    border-left: 3px solid var(--ink-light);
     transition: all 0.3s ease;
     position: relative;
   }
@@ -140,7 +140,7 @@
   .audience-card .label {
     font-family: var(--body);
     font-size: 0.7rem;
-    color: var(--slate);
+    color: var(--ink);
     text-transform: uppercase;
     letter-spacing: 0.26em;
     margin-bottom: 1rem;
@@ -201,24 +201,24 @@
   .formats {
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 0;
-    border-top: 1px solid rgba(244, 239, 229, 0.18);
+    border-top: 1px solid rgba(170, 179, 162, 0.28);
   }
   @media (max-width: 768px) { .formats { grid-template-columns: 1fr; } }
   .format {
     padding: 3rem 2.75rem;
-    border-right: 1px solid rgba(244, 239, 229, 0.18);
+    border-right: 1px solid rgba(170, 179, 162, 0.28);
     display: flex;
     flex-direction: column;
   }
   .format:last-child { border-right: none; }
   @media (max-width: 768px) {
-    .format { border-right: none; border-bottom: 1px solid rgba(244, 239, 229, 0.18); }
+    .format { border-right: none; border-bottom: 1px solid rgba(170, 179, 162, 0.28); }
     .format:last-child { border-bottom: none; }
   }
   .format-label {
     font-family: var(--mono);
     font-size: 0.72rem;
-    color: var(--sage-light);
+    color: var(--ink-light);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     font-weight: 500;
@@ -243,7 +243,7 @@
     font-variation-settings: "SOFT" 80, "WONK" 1, "opsz" 80;
   }
   .format-meta span {
-    color: var(--sage-light);
+    color: var(--ink-light);
     font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.22em;
@@ -311,7 +311,7 @@
     font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.26em;
-    color: var(--slate);
+    color: var(--ink);
     margin-bottom: 1.5rem;
     font-weight: 600;
     font-family: var(--mono);
@@ -331,7 +331,7 @@
     margin-right: 0.1rem;
   }
   .price-card .per {
-    color: var(--sage);
+    color: var(--ink);
     font-size: 0.9rem;
     margin-bottom: 1.5rem;
     font-family: var(--mono);
@@ -380,13 +380,13 @@
     content: '+';
     font-family: var(--display);
     font-size: 1.6rem;
-    color: var(--slate);
+    color: var(--moss);
     font-style: italic;
     transition: transform 0.3s ease;
     line-height: 1;
     flex-shrink: 0;
   }
-  details[open] summary::after { content: '–'; color: var(--rust); }
+  details[open] summary::after { content: '–'; color: var(--moss); }
   details summary:hover { color: var(--moss); }
   details p { padding-top: 1rem; color: var(--charcoal); font-size: 1.05rem; }
   .faq-cta-row { margin-top: 3rem; text-align: center; }
@@ -407,7 +407,7 @@
 
 <nav class="nav" id="nav">
   <div class="nav-inner">
-    <a href="home.html" class="logo">Works <span class="by">by</span> Love</a>
+    <a href="home.html" class="logo">Works <span class="by">by</span> <span class="love">Love</span></a>
     <ul class="nav-links">
       <li><a href="home.html#audience">The Work</a></li>
       <li><a href="about.html">About Edie</a></li>
@@ -432,7 +432,7 @@
         <div class="hero-meta">
           <div>
             <strong>In your home</strong>
-            Memphis &amp; metro
+            Memphis area
           </div>
           <div>
             <strong>On Zoom</strong>
@@ -475,7 +475,7 @@
       <article class="audience-card">
         <span class="label">After a divorce or separation</span>
         <h3>The marriage ended. The objects did not.</h3>
-        <p>Wedding gifts. Photographs. Furniture from a family that is no longer your family. You got two drawers in last January and stopped. Edie does not have an opinion about the marriage. She works with you on what stays and what goes, in whatever order makes sense to you.</p>
+        <p>Wedding gifts. Photographs. Furniture from a family that is no longer your family. You started a few drawers months ago and stopped. Edie does not have an opinion about the marriage. She works with you on what stays and what goes, in whatever order makes sense to you.</p>
         <a href="contact.html" class="card-cta">Book an Introduction <span class="arrow">→</span></a>
       </article>
 
@@ -489,7 +489,7 @@
       <article class="audience-card">
         <span class="label">When the house has gotten away from you</span>
         <h3>You know what your home looks like.</h3>
-        <p>You have lived alone with it for a long time. You have been carrying that quietly for years. Nothing about working with Edie involves a camera, a family member, or anyone in your home without your invitation. You set the pace. You decide what stays. You can stop a session at any point.</p>
+        <p>You have been carrying that quietly for a long time. Nothing about working with Edie involves a camera, a family member, or anyone in your home without your invitation. You set the pace. You decide what stays. You can stop a session at any point.</p>
         <a href="contact.html" class="card-cta">Book an Introduction <span class="arrow">→</span></a>
       </article>
     </div>
@@ -540,7 +540,7 @@
           <div><strong>$75</strong><span>per hour</span></div>
           <div><strong>2 hrs</strong><span>per session</span></div>
         </div>
-        <p>Edie meets you over video. You hold the camera. She talks you through it. The privacy of a closed door you control. Edie has worked this way with clients in Canada, Los Angeles, Texas, and North Carolina.</p>
+        <p>Edie meets you over video. You hold the camera. She talks you through it. The privacy of a closed door you control. Edie has worked this way with clients across North America.</p>
         <a href="contact.html" class="format-cta">Book an Introduction <span class="arrow">→</span></a>
       </div>
     </div>
@@ -656,8 +656,22 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <a href="home.html" class="logo">Works <span class="by">by</span> Love</a>
+        <a href="home.html" class="logo">Works <span class="by">by</span> <span class="love">Love</span></a>
         <p>Grief counseling with a practical application. In your home in Memphis, or on Zoom anywhere in North America.</p>
+        <div class="footer-social">
+          <a href="https://www.instagram.com/worksbylove/" aria-label="Instagram" target="_blank" rel="noopener">
+            <span class="icon icon-instagram" aria-hidden="true"></span>
+          </a>
+          <a href="https://www.facebook.com/ReverendEdithALove" aria-label="Facebook" target="_blank" rel="noopener">
+            <span class="icon icon-facebook" aria-hidden="true"></span>
+          </a>
+          <a href="https://www.linkedin.com/in/edith-love-33294446/" aria-label="LinkedIn" target="_blank" rel="noopener">
+            <span class="icon icon-linkedin" aria-hidden="true"></span>
+          </a>
+          <a href="contact.html" aria-label="Email Edie">
+            <span class="icon icon-email" aria-hidden="true"></span>
+          </a>
+        </div>
       </div>
       <div>
         <h4>Site</h4>
