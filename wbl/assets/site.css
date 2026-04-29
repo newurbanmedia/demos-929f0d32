@@ -11,8 +11,8 @@
   --soft-white:   #fbf8f1;
   --paper:        #faf6ec;
 
-  --forest:       #1e2c22;
-  --forest-deep:  #131e17;
+  --forest:       #3c5a3d;
+  --forest-deep:  #2a4029;
   --moss:         #56684f;
   --moss-deep:    #41513c;
   --sage:         #6e7b69;
@@ -34,6 +34,10 @@
   --rust:         #8a4f3c;
   --rule:         #c9c1b1;
   --rule-soft:    #ddd5c4;
+
+  /* Headings: very dark gray with a subtle forest warmth — near-black on cream.
+     Italic accents inside headings stay green via --accent-color. */
+  --heading:      #1a201c;
 
   --display: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
   --body:    'DM Sans', system-ui, sans-serif;
@@ -64,7 +68,7 @@ img { max-width: 100%; display: block; }
 h1, h2, h3, h4 {
   font-family: var(--display);
   font-weight: 380;
-  color: var(--forest);
+  color: var(--heading);
   letter-spacing: -0.018em;
   line-height: 1.06;
   text-wrap: balance;
@@ -104,6 +108,11 @@ a:hover { color: var(--moss); }
 .italic, em.soft {
   font-style: italic;
   font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144;
+  color: var(--accent-color);
+}
+.dark-section .italic,
+.dark-section em.soft {
+  color: var(--ink-light);
 }
 
 .eyebrow {
@@ -227,7 +236,7 @@ section[id] { scroll-margin-top: 96px; }
 /* ============ BUTTONS ============ */
 .btn {
   display: inline-flex; align-items: center; gap: 0.6rem;
-  padding: 0.95rem 1.85rem;
+  padding: 0.76rem 1.85rem;
   border-radius: 999px;
   font-family: var(--body);
   font-size: 0.97rem;
@@ -272,49 +281,24 @@ section[id] { scroll-margin-top: 96px; }
   border-color: var(--cream);
 }
 
-/* ============ NATURE IMAGE PLACEHOLDERS ============ */
-/* Real images can replace these later. For now they are
-   composed of subtle SVG shapes — never people. */
-.nature {
-  border-radius: 4px;
-  overflow: hidden;
-  position: relative;
-  background: var(--soft-white);
-  display: block;
-  aspect-ratio: 4/5;
-  isolation: isolate;
-}
-.nature.wide { aspect-ratio: 16/10; }
-.nature.tall { aspect-ratio: 3/4; }
-.nature.square { aspect-ratio: 1/1; }
-.nature svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-}
-.nature::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 50% 100%, rgba(19, 30, 23, 0.18), transparent 60%),
-    radial-gradient(ellipse at 50% 0%, rgba(244, 239, 229, 0.12), transparent 50%);
-  pointer-events: none;
-  mix-blend-mode: multiply;
-}
-.nature-caption {
-  position: absolute;
-  bottom: 1rem;
-  left: 1rem;
+/* Photo caption — small label below an image */
+.photo-caption {
+  margin-top: 1rem;
   font-family: var(--mono);
   font-size: 0.7rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(244, 239, 229, 0.75);
-  z-index: 2;
-  pointer-events: none;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.photo-caption::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: var(--ink);
+  flex-shrink: 0;
 }
 
 /* Image notes — small mark to remind that real photography is intended */
@@ -325,14 +309,22 @@ section[id] { scroll-margin-top: 96px; }
   z-index: 2;
   font-family: var(--mono);
   font-size: 0.62rem;
+  font-weight: 500;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(244, 239, 229, 0.7);
-  border: 1px solid rgba(244, 239, 229, 0.35);
-  padding: 0.35rem 0.55rem;
-  border-radius: 2px;
-  background: rgba(19, 30, 23, 0.18);
-  backdrop-filter: blur(2px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.4rem 0.65rem;
+  border-radius: 5px;
+  background: linear-gradient(
+    180deg,
+    rgba(35, 30, 26, 0.22) 0%,
+    rgba(15, 12, 10, 0.29) 100%
+  );
+  backdrop-filter: blur(12px) saturate(130%);
+  -webkit-backdrop-filter: blur(12px) saturate(130%);
+  box-shadow: none;
+  text-shadow: none;
 }
 
 /* ============ CARDS ============ */
@@ -474,17 +466,237 @@ footer a:hover { color: var(--cream); }
   color: rgba(244, 239, 229, 0.5);
   max-width: var(--maxw);
 }
+.footer-bottom a {
+  font-size: inherit;
+}
 
 /* ============ ANIMATIONS ============ */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(22px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
-.reveal { opacity: 0; animation: fadeInUp 0.9s cubic-bezier(.2,.7,.2,1) forwards; }
-.reveal.delay-1 { animation-delay: 0.10s; }
-.reveal.delay-2 { animation-delay: 0.22s; }
-.reveal.delay-3 { animation-delay: 0.36s; }
-.reveal.delay-4 { animation-delay: 0.52s; }
+
+/* Above-the-fold reveals fire on load */
+.reveal {
+  opacity: 0;
+  animation: fadeInUp 1.4s cubic-bezier(.2,.7,.2,1) both;
+}
+.reveal.delay-1 { animation-delay: 0.18s; }
+.reveal.delay-2 { animation-delay: 0.36s; }
+.reveal.delay-3 { animation-delay: 0.56s; }
+.reveal.delay-4 { animation-delay: 0.78s; }
+
+/* Below-the-fold elements use .in-view, set by IntersectionObserver */
+.in-view {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(3px);
+  transition:
+    opacity 1.5s cubic-bezier(.2,.7,.2,1),
+    transform 1.5s cubic-bezier(.2,.7,.2,1),
+    filter 1.4s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform, filter;
+}
+.in-view.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+
+/* A simpler fade-only variant (for big quotes / display type) */
+.in-view-fade {
+  opacity: 0;
+  transition: opacity 1.8s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity;
+}
+.in-view-fade.is-visible { opacity: 1; }
+
+/* A deeper, slower rise (for full-width sections / images) */
+.in-view-rise {
+  opacity: 0;
+  transform: translateY(48px);
+  transition:
+    opacity 1.8s cubic-bezier(.2,.7,.2,1),
+    transform 1.8s cubic-bezier(.2,.7,.2,1);
+  will-change: opacity, transform;
+}
+.in-view-rise.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children inside an .in-view-stagger group.
+   Uses animation (not transition) so hover transitions on cards aren't blocked. */
+@keyframes staggerRise {
+  from { opacity: 0; transform: translateY(22px); filter: blur(3px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+.in-view-stagger > * {
+  opacity: 0; /* hidden until parent gets .is-visible */
+}
+.in-view-stagger.is-visible > * {
+  animation: staggerRise 1.3s cubic-bezier(.2,.7,.2,1) both;
+}
+.in-view-stagger.is-visible > *:nth-child(1) { animation-delay: 0.00s; }
+.in-view-stagger.is-visible > *:nth-child(2) { animation-delay: 0.14s; }
+.in-view-stagger.is-visible > *:nth-child(3) { animation-delay: 0.28s; }
+.in-view-stagger.is-visible > *:nth-child(4) { animation-delay: 0.42s; }
+.in-view-stagger.is-visible > *:nth-child(5) { animation-delay: 0.56s; }
+.in-view-stagger.is-visible > *:nth-child(6) { animation-delay: 0.70s; }
+.in-view-stagger.is-visible > *:nth-child(n+7) { animation-delay: 0.84s; }
+
+/* Word-by-word reveal — wraps each word in <span class="reveal-word"> */
+.reveal-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.4em);
+  filter: blur(6px);
+  animation: wordDrift 1.6s cubic-bezier(.2,.7,.2,1) both;
+}
+@keyframes wordDrift {
+  from { opacity: 0; transform: translateY(0.4em); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* Slow continuous breath on framed photos — gentle Ken Burns */
+@keyframes photoDrift {
+  0%, 100% { transform: scale(1.02) translate3d(0, 0, 0); }
+  50%      { transform: scale(1.04) translate3d(-3px, -6px, 0); }
+}
+.photo-frame img,
+.edith-photo img,
+.io-book img {
+  animation: photoDrift 24s ease-in-out infinite;
+}
+.photo-frame:hover img,
+.edith-photo:hover img,
+.io-book:hover img {
+  animation-play-state: paused;
+}
+
+/* Italic accents — barely-there variable-axis shimmer */
+@keyframes accentShimmer {
+  0%, 100% { font-variation-settings: "SOFT" 100, "WONK" 1, "opsz" 144; }
+  50%      { font-variation-settings: "SOFT" 80,  "WONK" 0, "opsz" 120; }
+}
+.accent-italic {
+  animation: accentShimmer 18s ease-in-out infinite;
+}
+
+/* ============ TWEAK-DRIVEN OVERRIDES ============ */
+:root {
+  --accent-color: var(--moss);
+  --photo-filter: none;
+  --photo-drift-duration: 24s;
+}
+
+/* Apply tweak-controlled accent color (overrides static color) */
+.accent-italic,
+.accent {
+  color: var(--accent-color);
+}
+.dark-section .accent-italic,
+.dark-section .accent {
+  color: var(--ink-light); /* dark sections still get light text */
+}
+
+/* Apply tweak-controlled filter to all real photos */
+.photo-frame img,
+.edith-photo img,
+.io-book img {
+  filter: var(--photo-filter);
+  animation-duration: var(--photo-drift-duration);
+}
+
+/* Motion-off — disables all entry animations and continuous drift */
+html.motion-off *,
+html.motion-off *::before,
+html.motion-off *::after {
+  animation-duration: 0.001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+}
+html.motion-off .in-view,
+html.motion-off .in-view-fade,
+html.motion-off .in-view-rise,
+html.motion-off .in-view-stagger > * {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+}
+
+/* Hide photo tags when toggle is off */
+html.hide-photo-tags .nature-tag,
+html.hide-photo-tags .e404-image-tag {
+  display: none;
+}
+
+/* Slow ambient drift on hero backdrop ornaments (if present) */
+@keyframes ambientFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50%      { transform: translate3d(0, -10px, 0); }
+}
+.hero::before, .hero::after {
+  /* If a page has decorative pseudo-elements, they breathe slowly */
+  animation: ambientFloat 22s ease-in-out infinite;
+}
+
+/* Smooth, slow card hover lift — !important to beat page-level transitions */
+.audience-card,
+.session-card,
+.option-card,
+.fact,
+details {
+  transition:
+    transform 0.9s cubic-bezier(.2,.7,.2,1),
+    box-shadow 0.9s cubic-bezier(.2,.7,.2,1),
+    border-color 0.9s cubic-bezier(.2,.7,.2,1),
+    background-color 0.9s cubic-bezier(.2,.7,.2,1) !important;
+}
+.audience-card:hover,
+.session-card:hover,
+.option-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Slow underline grow on inline links */
+a.card-cta,
+a.format-cta,
+.option-action,
+.btn-text {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 100% 1px;
+  transition: background-size 0.8s cubic-bezier(.2,.7,.2,1), color 0.6s ease;
+}
+a.card-cta:hover,
+a.format-cta:hover,
+.option-action:hover,
+.btn-text:hover {
+  background-size: 100% 2px;
+}
+
+/* Buttons get a slow, smooth color/shadow transition */
+.btn,
+.btn-primary,
+.btn-secondary,
+.nav-cta {
+  transition:
+    background-color 0.7s cubic-bezier(.2,.7,.2,1),
+    color 0.7s cubic-bezier(.2,.7,.2,1),
+    border-color 0.7s cubic-bezier(.2,.7,.2,1),
+    box-shadow 0.7s cubic-bezier(.2,.7,.2,1),
+    transform 0.7s cubic-bezier(.2,.7,.2,1);
+}
+
+/* Nav CTA needs a snappier color flip so the text stays readable mid-hover */
+.nav-links a.nav-cta {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
 
 :focus-visible {
   outline: 2px solid var(--moss);
