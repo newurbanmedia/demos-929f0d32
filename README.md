@@ -12,6 +12,7 @@
 - [The Last Christmas — Identidad Visual , Cazateatro 2026](./lc2.html)
 - [Latin Fest 901 — Visual Identity 2026](./lf-1.html)
 - [Latin Fest 901 · 2026 — Design Presentation](./lf-2.html)
+- [Mid-South Trans Nation — Visual Identity Proposal](./mstn.html)
 - [Mid-South Trans Nation — Visual Identity Proposal](./MSTN26.html)
 - [NFC Investments, LLC — Memphis, Tennessee](./nfc.html)
 - [New Urban Media — Design System v1.2](./num-design-system-v1.2.html)
